@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.thymeleaf.org ">
+<head lang="en">
+    <title>Orders</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen"/>
+    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <link href="../static/css/spring-core.css"
+          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th><span th:text="#{label.order.id}"></span></th>
+            <th><span th:text="#{label.order.price}"></span></th>
+            <th><span th:text="#{label.order.title}"></span></th>
+            <th><span th:text="#{label.order.portalUserFullName}"></span></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:unless="${order == null}" th:each="order: ${orderPage.content}">
+            <td><span th:text="${order.id}"></span></td>
+            <td><span th:text="${order.price}"></span></td>
+            <td><span th:text="${order.title}"></span></td>
+            <td><span th:text="${order.portalUser.firstName}+' '+${order.portalUser.lastName}"></span></td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${orderPage.totalPages > 0}" class="pagination"
+         th:each="pageNumber : ${pageNumbers}">
+        <a th:href="@{/order/paginated(page=${pageNumber})}"
+           th:text="${pageNumber}"></a>
+    </div>
+</div>
+</body>
+</html>

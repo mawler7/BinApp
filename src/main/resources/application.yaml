@@ -1,0 +1,19 @@
+spring:
+  messages:
+    basename: messages/messages
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/binapp?serverTimezone=CET
+    username: root
+    password: rootpass
+    drivateClassName: com.mysql.cj.jdbc.Driver
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      dialect: org.hibernate.dialect.MySQL5Dialect
+      dll-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+

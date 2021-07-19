@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+
+  <title>Spring MVC CRUD</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+  <link href="https://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
+        th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
+        rel="stylesheet" media="screen" />
+
+  <script src="https://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
+          th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+
+  <link href="../static/css/spring-core.css"
+        th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+  <form th:action="@{save}" th:object="${order}" method="post">
+    <div class="form-group">
+      <input type="hidden" th:field="*{order.id}">
+      <input class="form-control" placeholder="Provide Bin Name" th:field="*{order.containerName}">
+      <br/>
+      <input class="form-control" placeholder="Provide Bin Amount" required="true" autofocus="true" th:field="*{order.amount}">
+      <br/>
+      <input class="form-control" placeholder="Provide Bin Amount" required="true" autofocus="true" th:field="*{order.truckType}">
+      <input class="form-control" placeholder="Provide Bin Amount" required="true" autofocus="true" th:field="*{order.supplierType}">
+<!--      <input class="form-control" placeholder="Provide Bin Price" required="true" autofocus="true" th:field="*{price}">-->
+      <br/>
+      <input type="submit" class="btn btn-primary" th:value="Save"/>
+    </div>
+  </form>
+</div>
+<div th:replace="fragments/footer :: footer" />
+</body>
+</html>
