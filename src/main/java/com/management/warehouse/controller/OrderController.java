@@ -107,21 +107,25 @@ public class OrderController {
         return "redirect:/order/paginated";
     }
 
-    @PostMapping("/update{id}")
-    public String editOrder(@RequestParam int id, @RequestBody Order order, BindingResult result, Model model) {
+    @PostMapping("/update")
+    public String editOrder(@RequestParam int id, Order order, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "new";
         } else {
             model.addAttribute("order", orderService.findById(id));
-            model.addAttribute("truck", truckRepository.findById(id));
-            model.addAttribute("container", containerRepository.findById(id));
-            model.addAttribute("process", processRepository.findById(id));
-            model.addAttribute("supplier", supplierRepository.findById(id));
+            List<Truck> trucks = truckRepository.findAll();
+            model.addAttribute("truck", trucks);
+            List<Container> containers = containerRepository.findAll();
+            model.addAttribute("container", containers);
+            List<Process> processes = processRepository.findAll();
+            model.addAttribute("process", processes);
+            List<Supplier> suppliers = supplierRepository.findAll();
+            model.addAttribute("supplier", suppliers);
         }
         return "create";
     }
 
-    @PostMapping("/save{id}")
+    @PostMapping("/save")
     public String saveOrder(@RequestParam int id, Order order) {
         orderService.getOrderById(id);
         orderService.updateOrder(order);

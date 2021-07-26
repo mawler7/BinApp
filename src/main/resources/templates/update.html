@@ -19,10 +19,11 @@
 <div class="container">
   <div class="row" style="margin-top:20px">
     <div class="col-xs12 col-sm8 col-md6 col-sm-offset-2 col-md-offset3">
-      <form th:action="@{editOrder}" th:value="${order}" method="post">
+      <form th:action="@{/order/update}" th:value="${order}" method="post">
         <fieldset>
           <h1>Please order details</h1>
           <div class="form-group">
+            <input type="hidden" th:field="*{id}">
             <select class="form-control" th:field="*{truckType}">
               <option value="0">Select truck type</option>
               <option th:each="truck : ${truck}" th:value="${truck.id}" th:text="${truck.truckType}"></option>
@@ -35,13 +36,11 @@
           <select class="form-control" th:field="*{processType}">
             <option value="0">Select process type</option>
             <option th:each="p : ${process}" th:value="${p.id}" th:text="${p.processType}"></option>
-
           </select>
           <select class="form-control" th:field="*{supplierName}">
             <option value="0">Select supplier name</option>
             <option th:each="supplier : ${supplier}" th:value="${supplier.id}" th:text="${supplier.supplierName}"></option>
           </select>
-
           <div class="form-group">
             <input type="text" th:field="*{amount}"
                    class="form-control input-lg"
@@ -54,7 +53,7 @@
             </span>
           </div>
           <div class="form-group">
-            <input type="date" th:field="*{date}"
+            <input type="text" th:field="*{date}"
                    class="form-control input-lg"
                    placeholder="date"
                    required="true">
