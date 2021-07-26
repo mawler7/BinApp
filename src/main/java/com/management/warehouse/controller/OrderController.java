@@ -122,14 +122,14 @@ public class OrderController {
             List<Supplier> suppliers = supplierRepository.findAll();
             model.addAttribute("supplier", suppliers);
         }
-        return "create";
+        return "edit";
     }
 
     @PostMapping("/save")
     public String saveOrder(@RequestParam int id, Order order) {
         orderService.getOrderById(id);
         orderService.updateOrder(order);
-        return "redirect:order";
+        return "redirect:paginated";
     }
 }
 

@@ -31,7 +31,7 @@ public class Order implements Serializable {
     @Column(name = "DATE")
     private String date;
     @Column(name = "IS_DELIVERED")
-    private boolean isDelivered = false;
+    private boolean isDelivered = true;
     @Column(name = "DATE_DELIVERED")
     private LocalDateTime dateDelivered;
 
