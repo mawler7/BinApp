@@ -3,10 +3,7 @@ package com.management.warehouse.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
-import java.util.Date;
-
 
 @Entity
 @Data
@@ -21,8 +18,4 @@ public class Process {
     private int id;
     @Column(name = "PROCESS_TYPE")
     private String processType;
-
-
-
-
 }

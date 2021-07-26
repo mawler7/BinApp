@@ -10,7 +10,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +18,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     UserService userService;
-
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -33,5 +31,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException(username + "is not found");
         }
         return new User(portalUser.getLogin(), portalUser.getPassword(), grantedAuthorities);
-        }
     }
+}

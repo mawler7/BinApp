@@ -15,7 +15,6 @@ import java.util.Set;
 @Table(name = "container")
 public class Container implements Serializable {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "CONTAINER_ID")
@@ -34,6 +33,8 @@ public class Container implements Serializable {
     private double volume;
     @Column(name = "CONTAINER_PRICE")
     private double price;
+    @Column(name = "CONTAINER_TOTAL")
+    private double containerTotal;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "container_order",
             joinColumns = @JoinColumn(name = "CONTAINER_ID_ID"),
@@ -51,15 +52,4 @@ public class Container implements Serializable {
         this.price = price;
         this.containers = containers;
     }
-
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-//    @JoinTable(name = "loading",
-//            joinColumns = {
-//            @JoinColumn(name = "CONTAINER_ID", referencedColumnName = "ID",
-//                    nullable = false, updatable = false)},
-//    inverseJoinColumns = {
-//            @JoinColumn(name = "LOADING_ID", referencedColumnName = "ID",
-//                    nullable = false,updatable = false)})
-
-
 }

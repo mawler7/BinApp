@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
+
 @Service
 public class ContainerServiceImpl implements ContainerService {
 
@@ -22,5 +22,17 @@ public class ContainerServiceImpl implements ContainerService {
     @Override
     public Page<Container> getContainersPaginated(Pageable pageable) {
         return containerRepository.findAll(pageable);
+    }
+
+
+    @Override
+    public Container findById(int id) {
+        return containerRepository.getById(id);
+    }
+
+
+    @Override
+    public void save(Container container) {
+        containerRepository.save(container);
     }
 }

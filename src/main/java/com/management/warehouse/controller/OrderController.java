@@ -4,6 +4,7 @@ import com.management.warehouse.model.*;
 import com.management.warehouse.model.Process;
 import com.management.warehouse.repository.*;
 import com.management.warehouse.service.OrderService;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,16 +24,12 @@ public class OrderController {
 
     @Autowired
     OrderService orderService;
-
     @Autowired
     TruckRepository truckRepository;
-
     @Autowired
     ContainerRepository containerRepository;
-
     @Autowired
     SupplierRepository supplierRepository;
-
     @Autowired
     ProcessRepository processRepository;
 
@@ -42,14 +39,14 @@ public class OrderController {
 
     @RequestMapping("/list")
     public String getOrders(Model model) {
-        model.addAttribute("orders", orderService.getAllOrders());
+        model.addAttribute("order", orderService.getAllOrders());
         return "order";
     }
 
     @RequestMapping("/paginated")
     public String getOrdersPaginated(Model model, @RequestParam("page") Optional<Integer> page) {
         int currentPage = page.orElse(1);
-        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 5));
+        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
         model.addAttribute("orderPage", orderPage);
         int totalPages = orderPage.getTotalPages();
         if (totalPages > 0) {
@@ -63,12 +60,10 @@ public class OrderController {
     }
 
     @GetMapping("/delivered")
-    public String setDelivered(Model model,
-                               @RequestParam("id") Optional<Integer> id,
-                               @RequestParam("page") Optional<Integer> page) {
+    public String setDelivered(Model model, @RequestParam("id") Optional<Integer> id, @RequestParam("page") Optional<Integer> page) {
         orderService.setDelivered(id.get());
         int currentPage = page.orElse(1);
-        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 5));
+        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
         model.addAttribute("orderPage", orderPage);
         int totalPages = orderPage.getTotalPages();
         if (totalPages > 0) {
@@ -92,45 +87,46 @@ public class OrderController {
         model.addAttribute("process", processes);
         List<Supplier> suppliers = supplierRepository.findAll();
         model.addAttribute("supplier", suppliers);
-
-
         return "create";
     }
 
     @PostMapping("/create")
-    public String registerOrder(@Valid Order order,
-                                BindingResult result) {
+    public String registerOrder(@Valid Order order, BindingResult result) {
         if (result.hasErrors()) {
             return "create";
         } else {
-            orderService.save(order);
+            orderService.saveOrder(order);
             return "redirect:/order/paginated";
         }
     }
 
 
-
     @PostMapping("/delete{id}")
-    public String deleteOrder(@RequestParam int id, Model model){
-            orderService.deleteOrder(id);
+    public String deleteOrder(@RequestParam int id, Model model) {
+        orderService.deleteOrder(id);
         return "redirect:/order/paginated";
     }
 
-    @PostMapping("/edit")
-    public String editOrder(@RequestParam int id, Model model){
-
-        model.addAttribute("order", orderService.findById(id));
-        orderService.editOrder(orderService.findById(id));
-        model.addAttribute("order", orderService.getAllOrders());
-        return "redirect:/edit";
+    @PostMapping("/update{id}")
+    public String editOrder(@RequestParam int id, @RequestBody Order order, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "new";
+        } else {
+            model.addAttribute("order", orderService.findById(id));
+            model.addAttribute("truck", truckRepository.findById(id));
+            model.addAttribute("container", containerRepository.findById(id));
+            model.addAttribute("process", processRepository.findById(id));
+            model.addAttribute("supplier", supplierRepository.findById(id));
+        }
+        return "create";
     }
 
-
-
-
-
-
-
+    @PostMapping("/save{id}")
+    public String saveOrder(@RequestParam int id, Order order) {
+        orderService.getOrderById(id);
+        orderService.updateOrder(order);
+        return "redirect:order";
+    }
 }
 
 

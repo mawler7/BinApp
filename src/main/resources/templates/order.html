@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xmlns:sec="http://www.w3.org/1999/xhtml"
-      xsi:schemaLocation="http://www.thymeleaf.org ">
+<html xmlns:th="http://www.thymeleaf.org">
 <head lang="en">
     <title>Orders</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -16,7 +14,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 </head>
 <body>
-
 <div th:replace="fragments/header :: header"/>
 <div class="container">
     <table class="table">
@@ -50,7 +47,8 @@
                     <a th:href="@{/order/delivered(id=${order.id})}"
                        sec:authorize="hasAuthority('ADMIN')" th:text="setDelivered"></a></span>
             </td>
-            <td><form th:action="@{edit}" method="post">
+            <td>
+                <form th:action="@{update}" method="post">
                     <button th:type="submit" class="btn btn-success" th:name="id" th:value="${order.id}">Edit</button>
                 </form>
             </td>
@@ -60,7 +58,6 @@
                     </button>
                 </form>
             </td>
-
         </tr>
         </tbody>
     </table>
@@ -70,11 +67,6 @@
            th:text="${pageNumber}"></a>
     </div>
 </div>
-
-
-
-
-
-<div th:replace="fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.management.warehouse.controller;
 
+import com.management.warehouse.service.ContainerService;
 import com.management.warehouse.service.UserService;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,32 +23,37 @@ public class HomeController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    ContainerService containerService;
 
     @GetMapping("/home")
-    public String homePage(){
+    public String homePage() {
         return "home";
     }
 
     @GetMapping("/login")
-    public String loginPage(){
+    public String loginPage() {
         return "login";
     }
+
     @GetMapping("/admin")
-    public String adminPage(){
+    public String adminPage() {
         return "admin";
     }
+
     @GetMapping("/logout")
-    public String logoutPage(HttpServletRequest request, HttpServletResponse response){
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication.isAuthenticated()){
+        if (authentication.isAuthenticated()) {
             new SecurityContextLogoutHandler().logout(request, response, authentication);
-        }return "redirect:login?logout";
+        }
+        return "redirect:login?logout";
     }
 
     @GetMapping("/user")
-    public String userPage(Authentication authentication){
+    public String userPage(Authentication authentication) {
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        if(authorities.contains(new SimpleGrantedAuthority("ADMIN"))){
+        if (authorities.contains(new SimpleGrantedAuthority("ADMIN"))) {
             return "userPage";
         } else {
             return "home";
@@ -55,13 +61,12 @@ public class HomeController {
     }
 
     @GetMapping("/details")
-    public String userDetails(Model model){
+    public String userDetails(Model model) {
         User user = (User) SecurityContextHolder
                 .getContext()
                 .getAuthentication()
                 .getPrincipal();
-        model.addAttribute("portalUser",userService.findByLogin(user.getUsername()));
+        model.addAttribute("portalUser", userService.findByLogin(user.getUsername()));
         return "details";
     }
-
 }

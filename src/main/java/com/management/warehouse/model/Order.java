@@ -31,7 +31,7 @@ public class Order implements Serializable {
     @Column(name = "DATE")
     private String date;
     @Column(name = "IS_DELIVERED")
-    private boolean isDelivered = true;
+    private boolean isDelivered = false;
     @Column(name = "DATE_DELIVERED")
     private LocalDateTime dateDelivered;
 
@@ -87,7 +87,7 @@ public class Order implements Serializable {
         return date;
     }
 
-    public void setDate(String  date) {
+    public void String(String  date) {
         this.date = date;
     }
 
@@ -106,62 +106,4 @@ public class Order implements Serializable {
     public void setDateDelivered(LocalDateTime dateDelivered) {
         this.dateDelivered = dateDelivered;
     }
-
-//    @JoinTable(name = "portal_user_roles",
-//            joinColumns = @JoinColumn(name = "PUR_PU_ID"),
-//            inverseJoinColumns = @JoinColumn(name = "PUR_RO_ID"))
-//    private Set<Role> roles;
-
-
-//    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(name = "container_order",
-//            joinColumns = @JoinColumn(name= "CONTAINER_ID_ID"),
-//            inverseJoinColumns = @JoinColumn(name = "ORDER_ID_ID"))
-//    private List<Container> containers;
-//
-//    @OneToOne(targetEntity = Truck.class)
-//    private Truck truck;
-//
-//    @OneToOne(targetEntity = Supplier.class)
-//    private Supplier supplier;
-//
-//    @OneToOne(targetEntity = Process.class)
-//    private Process process;
-//
-//
-//    @ManyToMany(targetEntity = Truck.class, fetch = FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    private List<Truck> trucks;
-//    @ManyToMany(targetEntity = Process.class, fetch = FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    private List<Process> processes;
-//    @ManyToMany(targetEntity = Supplier.class, fetch = FetchType.LAZY, cascade = {
-//            CascadeType.PERSIST,
-//            CascadeType.MERGE
-//    })
-//    private List<Supplier> suppliers;
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "O_TRUCK_ID", referencedColumnName = "TRUCK_ID")
-//    private Truck truck;
-//    @JoinColumn(name = "O_CONTAINER_ID", referencedColumnName = "CONTAINER_ID")
-//    private Container container;
-//    @Column(name = "AMOUNT")
-//    private int amount;
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "O_PROCESS_ID", referencedColumnName = "PROCESS_ID")
-//    private Process process;
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "O_SUPPLIER_ID", referencedColumnName = "SUPPLIER_ID")
-//    private Supplier supplier;
-//    @Column(name = "DATE")
-//    private String date;
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "ORD_PU_ID", referencedColumnName = "PU_ID")
-//    private PortalUser portalUser;
-
-
 }
