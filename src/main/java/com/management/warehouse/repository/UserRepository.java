@@ -12,5 +12,6 @@ public interface UserRepository extends JpaRepository<PortalUser, Integer> {
     PortalUser findByEmail(String email);
     Page<PortalUser> findByLastNameStartsWith(String lastName, Pageable pageable);
     PortalUser findByLogin(String login);
+    void deleteById(int id);
 
 }

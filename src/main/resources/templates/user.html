@@ -21,6 +21,7 @@
         <thead>
         <tr>
             <th><span th:text="#{label.portalUser.id}"></span></th>
+            <th><span th:text="#{label.portalUser.login}"></span></th>
             <th><span th:text="#{label.portalUser.portalUserFullName}"></span></th>
             <th><span th:text="#{label.portalUser.email}"></span></th>
             <th><span th:text="#{label.portalUser.role}"></span></th>
@@ -29,9 +30,21 @@
         <tbody>
         <tr th:unless="${portalUser == null}" th:each="portalUser: ${userPage.content}">
             <td><span th:text="${portalUser.id}"></span></td>
+            <td><span th:text="${portalUser.login}"></span></td>
             <td><span th:text="${portalUser.firstName}+' '+${portalUser.lastName}"></span></td>
             <td><span th:text="${portalUser.email}"></span></td>
             <td><span th:each="role, iterStat: ${portalUser.roles}" th:text="!${iterStat.last} ? ${role.name}+',' : ${role.name}"></span></td>
+            <td>
+                <form th:action="@{update}" method="post">
+                    <button th:type="submit" class="btn btn-success" th:name="id" th:value="${portalUser.id}">Edit</button>
+                </form>
+            </td>
+            <td>
+            <form th:action="@{delete}" method="post">
+                <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${portalUser.id}">Delete
+                </button>
+            </form>
+        </td>
         </tr>
         </tbody>
     </table>

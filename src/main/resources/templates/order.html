@@ -42,8 +42,8 @@
             <td><span th:text="${order.date}"></span></td>
             <td><span th:text="${order.isDelivered}"></span></td>
             <td><span sec:authorize="hasAuthority('ADMIN')" th:text="${order.dateDelivered}"></span></td>
-            <td><span th:if="${order.isDelivered == true}"></span>
-                <span th:unless="${order.isDelivered == false}">
+            <td><span th:if="${order.isDelivered == false}"></span>
+                <span th:unless="${order.isDelivered == true}">
                     <a th:href="@{/order/delivered(id=${order.id})}"
                        sec:authorize="hasAuthority('ADMIN')" th:text="setDelivered"></a></span>
             </td>

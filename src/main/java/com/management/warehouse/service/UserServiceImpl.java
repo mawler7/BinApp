@@ -1,5 +1,6 @@
 package com.management.warehouse.service;
 
+import com.management.warehouse.model.Order;
 import com.management.warehouse.model.PortalUser;
 import com.management.warehouse.model.Role;
 import com.management.warehouse.repository.RoleRepository;
@@ -10,7 +11,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.sound.sampled.Port;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -52,5 +55,22 @@ public class UserServiceImpl implements UserService {
         portalUser.setRoles(roles);
         userRepository.save(portalUser);
 
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        userRepository.deleteById(id);
+    }
+
+
+    @Override
+    public PortalUser findById(int id) {
+        return userRepository.getById(id);
+    }
+
+
+    @Override
+    public void updateUser(PortalUser portalUser) {
+        userRepository.save(portalUser);
     }
 }

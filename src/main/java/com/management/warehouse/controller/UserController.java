@@ -1,6 +1,6 @@
 package com.management.warehouse.controller;
 
-import com.management.warehouse.model.PortalUser;
+import com.management.warehouse.model.*;
 import com.management.warehouse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -102,6 +102,28 @@ public class UserController {
 
     }
 
+    @PostMapping("/delete{id}")
+    public String deleteUser(@RequestParam int id, Model model) {
+        userService.deleteUser(id);
+        return "redirect:/user/paginated";
+    }
+
+    @PostMapping("/update")
+    public String editUser(@RequestParam int id, PortalUser portalUser, BindingResult result, Model model) {
+        if (result.hasErrors()) {
+            return "new";
+        } else {
+            model.addAttribute("portalUser", userService.findById(id));
+        }
+        return "editUser";
+    }
+
+    @PostMapping("/save")
+    public String saveUser(@RequestParam int id, PortalUser portalUser) {
+        userService.findById(id);
+        userService.updateUser(portalUser);
+        return "redirect:paginated";
+    }
 
     @RequestMapping("/paginated")
     public String getUsersPaginated(Model model, @RequestParam("page")Optional<Integer> page) {
