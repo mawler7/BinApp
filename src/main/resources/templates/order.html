@@ -37,8 +37,6 @@
             <td><span th:text="${order.truck.truckType}"></span></td>
             <td><span th:text="${order.container.containerName}"></span></td>
             <td><span th:text="${order.amount}"></span></td>
-            <td><span sec:authorize="hasAuthority('ADMIN')" th:text="${order.process.processType}"></span></td>
-            <td><span sec:authorize="hasAuthority('ADMIN')" th:text="${order.supplier.supplierName}"></span></td>
             <td><span th:text="${order.date}"></span></td>
             <td><span th:text="${order.isDelivered}"></span></td>
             <td><span sec:authorize="hasAuthority('ADMIN')" th:text="${order.dateDelivered}"></span></td>

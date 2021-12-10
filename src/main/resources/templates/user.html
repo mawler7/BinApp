@@ -28,20 +28,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:unless="${portalUser == null}" th:each="portalUser: ${userPage.content}">
-            <td><span th:text="${portalUser.id}"></span></td>
-            <td><span th:text="${portalUser.login}"></span></td>
-            <td><span th:text="${portalUser.firstName}+' '+${portalUser.lastName}"></span></td>
-            <td><span th:text="${portalUser.email}"></span></td>
-            <td><span th:each="role, iterStat: ${portalUser.roles}" th:text="!${iterStat.last} ? ${role.name}+',' : ${role.name}"></span></td>
+        <tr th:unless="${user == null}" th:each="portalUser: ${userPage.content}">
+            <td><span th:text="${user.id}"></span></td>
+            <td><span th:text="${user.login}"></span></td>
+            <td><span th:text="${user.firstName}+' '+${user.lastName}"></span></td>
+            <td><span th:text="${user.email}"></span></td>
+            <td><span th:each="role, iterStat: ${user.roles}" th:text="!${iterStat.last} ? ${role.name}+',' : ${role.name}"></span></td>
             <td>
                 <form th:action="@{update}" method="post">
-                    <button th:type="submit" class="btn btn-success" th:name="id" th:value="${portalUser.id}">Edit</button>
+                    <button th:type="submit" class="btn btn-success" th:name="id" th:value="${user.id}">Edit</button>
                 </form>
             </td>
             <td>
             <form th:action="@{delete}" method="post">
-                <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${portalUser.id}">Delete
+                <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${user.id}">Delete
                 </button>
             </form>
         </td>
