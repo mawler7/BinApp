@@ -15,17 +15,16 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "ORDERS")
-@ToString
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Order implements Serializable {
 
     @Id
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
     @ManyToOne
@@ -40,6 +39,7 @@ public class Order implements Serializable {
     @Column(nullable = false)
     private String type;
 
+    @JoinColumn
     @ManyToOne
     private User user;
 

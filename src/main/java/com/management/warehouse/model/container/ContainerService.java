@@ -18,9 +18,8 @@ public class ContainerService {
     }
 
     public List<ContainerDto> getContainerList() {
-       List<Container> containerList = containerRepository.findAll();
-       return ContainerConverter.convertContainerListToDtoList(containerList);
-
+        List<Container> containerList = containerRepository.findAll();
+        return ContainerConverter.convertContainerListToDtoList(containerList);
     }
 
 

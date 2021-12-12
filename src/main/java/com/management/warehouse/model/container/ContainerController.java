@@ -1,11 +1,8 @@
 package com.management.warehouse.model.container;
 
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +26,9 @@ public class ContainerController {
 //    }
 
     @GetMapping("/")
-    public List<ContainerDto> getContainers(){return containerService.getContainerList();}
+    public List<ContainerDto> getContainers() {
+        return containerService.getContainerList();
+    }
 
     @GetMapping("/paginated")
     public String getContainersPaginated(Model model, @RequestParam("page") Optional<Integer> page) {

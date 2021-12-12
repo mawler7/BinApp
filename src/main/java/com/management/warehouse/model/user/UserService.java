@@ -4,7 +4,6 @@ package com.management.warehouse.model.user;
 import com.management.warehouse.exception.InvalidEmailException;
 import com.management.warehouse.exception.InvalidUserOrPasswordException;
 import com.management.warehouse.exception.UserAlreadyExistException;
-import com.management.warehouse.exception.UserNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +63,7 @@ public class UserService {
                 .lastName(userRegistrationDto.getLastName())
                 .active(true)
                 .password(passwordEncoder.encode(userRegistrationDto.getPassword()))
-                .role(UserRole.ROLE_ADMIN)
+                .role(UserRole.ROLE_USER)
                 .email(userRegistrationDto.getEmail())
                 .build();
         return UserConverter.convertUserToDto(userRepository.save(user));

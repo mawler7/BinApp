@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -76,8 +77,11 @@ public class OrderService {
         orderRepository.save(order);
     }
 
-    public List<Order> getAllOrders() {
-        return orderRepository.findAll();
+    public List<OrderDto> getAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(OrderConverter::convertToOrderDto)
+                .collect(Collectors.toList());
     }
 
     public List<Order> findAllByType(String type) {

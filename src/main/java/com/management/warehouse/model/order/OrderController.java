@@ -3,13 +3,11 @@ package com.management.warehouse.model.order;
 
 import com.management.warehouse.model.container.Container;
 import com.management.warehouse.model.container.ContainerRepository;
-
 import com.management.warehouse.model.truck.Truck;
 import com.management.warehouse.model.truck.TruckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -20,15 +18,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Controller
+@RestController
 @RequestMapping("/order")
 @RequiredArgsConstructor
 public class OrderController {
 
 
     private final OrderService orderService;
-    private final  TruckRepository truckRepository;
-    private final  ContainerRepository containerRepository;
+    private final TruckRepository truckRepository;
+    private final ContainerRepository containerRepository;
 
 
     @RequestMapping("/list")
@@ -37,6 +35,10 @@ public class OrderController {
         return "order";
     }
 
+    @GetMapping("/")
+    public List<OrderDto> getAllOrders() {
+        return orderService.getAllOrders();
+    }
 
 
     @RequestMapping("/paginated")

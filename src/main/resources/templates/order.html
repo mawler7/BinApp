@@ -1,70 +1,70 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
-    <title>Orders</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"
-          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"
-          rel="stylesheet" media="screen"/>
-    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"
-            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
-    <link href="../static/css/spring-core.css"
-          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-</head>
-<body>
-<div th:replace="fragments/header :: header"/>
-<div class="container">
-    <table class="table">
-        <thead>
-        <tr>
-            <th><span th:text="#{label.order.id}"></span></th>
-            <th><span th:text="#{label.order.truckId}"></span></th>
-            <th><span th:text="#{label.order.containerId}"></span></th>
-            <th><span th:text="#{label.order.amount}"></span></th>
-            <th><span sec:authorize="hasAuthority('ADMIN')" th:text="#{label.order.processType}"></span></th>
-            <th><span sec:authorize="hasAuthority('ADMIN')" th:text="#{label.order.supplierId}"></span></th>
-            <th><span th:text="#{label.order.date}"></span></th>
-            <th><span th:text="#{label.order.isDelivered}"></span></th>
-            <th><span sec:authorize="hasAuthority('ADMIN')" th:text="#{label.order.dateDelivered}"></span></th>
-            <th><span sec:authorize="hasAuthority('ADMIN')" th:text="#{label.order.setDelivered}"></span></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:unless="${order == null}" th:each="order: ${orderPage.content}">
-            <td><span th:text="${order.id}"></span></td>
-            <td><span th:text="${order.truck.truckType}"></span></td>
-            <td><span th:text="${order.container.containerName}"></span></td>
-            <td><span th:text="${order.amount}"></span></td>
-            <td><span th:text="${order.date}"></span></td>
-            <td><span th:text="${order.isDelivered}"></span></td>
-            <td><span sec:authorize="hasAuthority('ADMIN')" th:text="${order.dateDelivered}"></span></td>
-            <td><span th:if="${order.isDelivered == false}"></span>
-                <span th:unless="${order.isDelivered == true}">
-                    <a th:href="@{/order/delivered(id=${order.id})}"
-                       sec:authorize="hasAuthority('ADMIN')" th:text="setDelivered"></a></span>
-            </td>
-            <td>
-                <form th:action="@{update}" method="post">
-                    <button th:type="submit" class="btn btn-success" th:name="id" th:value="${order.id}">Edit</button>
-                </form>
-            </td>
-            <td>
-                <form th:action="@{delete}" method="post">
-                    <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${order.id}">Delete
-                    </button>
-                </form>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <div th:if="${orderPage.totalPages > 0}" class="pagination"
-         th:each="pageNumber : ${pageNumbers}">
-        <a th:href="@{/order/paginated(page=${pageNumber})}"
-           th:text="${pageNumber}"></a>
-    </div>
-</div>
-<div th:replace="fragments/footer :: footer"/>
-</body>
-</html>
+<!--<!DOCTYPE html>-->
+<!--<html xmlns:th="http://www.thymeleaf.org">-->
+<!--<head lang="en">-->
+<!--    <title>Orders</title>-->
+<!--    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>-->
+<!--    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.3.4/css/bootstrap.min.css"-->
+<!--          th:href="@{/webjars/bootstrap/3.3.5/css/bootstrap.min.css}"-->
+<!--          rel="stylesheet" media="screen"/>-->
+<!--    <script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.4/jquery.min.js"-->
+<!--            th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>-->
+<!--    <link href="../static/css/spring-core.css"-->
+<!--          th:href="@{css/spring-core.css}" rel="stylesheet" media="screen"/>-->
+<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"/>-->
+<!--    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>-->
+<!--</head>-->
+<!--<body>-->
+<!--<div th:replace="fragments/header :: header"/>-->
+<!--<div class="container">-->
+<!--    <table class="table">-->
+<!--        <thead>-->
+<!--        <tr>-->
+<!--            <th><span th:text="#{label.order.id}"></span></th>-->
+<!--            <th><span th:text="#{label.order.truckId}"></span></th>-->
+<!--            <th><span th:text="#{label.order.containerId}"></span></th>-->
+<!--            <th><span th:text="#{label.order.amount}"></span></th>-->
+<!--            <th><span th:text="#{label.order.processType}"></span></th>-->
+<!--            <th><span th:text="#{label.order.supplierId}"></span></th>-->
+<!--            <th><span th:text="#{label.order.date}"></span></th>-->
+<!--            <th><span th:text="#{label.order.isDelivered}"></span></th>-->
+<!--            <th><span th:text="#{label.order.dateDelivered}"></span></th>-->
+<!--            <th><span th:text="#{label.order.setDelivered}"></span></th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr th:unless="${order == null}" th:each="order: ${orderPage.content}">-->
+<!--            <td><span th:text="${order.id}"></span></td>-->
+<!--            <td><span th:text="${order.truck.truckType}"></span></td>-->
+<!--            <td><span th:text="${order.container.containerName}"></span></td>-->
+<!--            <td><span th:text="${order.amount}"></span></td>-->
+<!--            <td><span th:text="${order.date}"></span></td>-->
+<!--            <td><span th:text="${order.isDelivered}"></span></td>-->
+<!--            <td><span th:text="${order.dateDelivered}"></span></td>-->
+<!--            <td><span th:if="${order.isDelivered == false}"></span>-->
+<!--                <span th:unless="${order.isDelivered == true}">-->
+<!--                    <a th:href="@{/order/delivered(id=${order.id})}"-->
+<!--                       th:text="setDelivered"></a></span>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <form th:action="@{update}" method="post">-->
+<!--                    <button th:type="submit" class="btn btn-success" th:name="id" th:value="${order.id}">Edit</button>-->
+<!--                </form>-->
+<!--            </td>-->
+<!--            <td>-->
+<!--                <form th:action="@{delete}" method="post">-->
+<!--                    <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${order.id}">Delete-->
+<!--                    </button>-->
+<!--                </form>-->
+<!--            </td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--    </table>-->
+<!--    <div th:if="${orderPage.totalPages > 0}" class="pagination"-->
+<!--         th:each="pageNumber : ${pageNumbers}">-->
+<!--        <a th:href="@{/order/paginated(page=${pageNumber})}"-->
+<!--           th:text="${pageNumber}"></a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--<div th:replace="fragments/footer :: footer"/>-->
+<!--</body>-->
+<!--</html>-->

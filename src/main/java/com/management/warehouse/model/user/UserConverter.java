@@ -17,6 +17,7 @@ public class UserConverter {
                 .email(user.getEmail())
                 .role(user.getRole())
                 .active(user.isActive())
+                .password(user.getPassword())
                 .build();
 
     }
@@ -30,6 +31,7 @@ public class UserConverter {
                 .email(userDto.getEmail())
                 .role(userDto.getRole())
                 .active(userDto.isActive())
+                .password(userDto.getPassword())
                 .build();
     }
 
