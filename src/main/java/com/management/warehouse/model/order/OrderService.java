@@ -17,14 +17,21 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class OrderService {
 
-
     private final OrderRepository orderRepository;
+
     private final ContainerRepository containerRepository;
 
     public Page<Order> getOrdersPaginated(Pageable pageable) {
         return orderRepository.findAll(pageable);
     }
 
+
+    public List<OrderDto> getAllOrders() {
+        return orderRepository.findAll()
+                .stream()
+                .map(OrderConverter::convertToOrderDto)
+                .collect(Collectors.toList());
+    }
 
     public List<Order> setDelivered(UUID id) {
         Optional<Order> order = orderRepository.findById(id);
@@ -75,13 +82,6 @@ public class OrderService {
 
     public void updateOrder(Order order) {
         orderRepository.save(order);
-    }
-
-    public List<OrderDto> getAllOrders() {
-        return orderRepository.findAll()
-                .stream()
-                .map(OrderConverter::convertToOrderDto)
-                .collect(Collectors.toList());
     }
 
     public List<Order> findAllByType(String type) {

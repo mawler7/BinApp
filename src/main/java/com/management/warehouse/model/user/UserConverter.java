@@ -8,20 +8,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserConverter {
 
-    public static UserDto convertUserToDto(User user) {
-        if (user == null) return null;
-        return UserDto.builder()
-                .id(user.getId())
-                .firstName(user.getFirstName())
-                .lastName(user.getLastName())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .active(user.isActive())
-                .password(user.getPassword())
-                .build();
-
-    }
-
     public static User convertToUser(UserDto userDto) {
         if (userDto == null) return null;
         return User.builder()
@@ -33,6 +19,19 @@ public class UserConverter {
                 .active(userDto.isActive())
                 .password(userDto.getPassword())
                 .build();
+    }
+
+    public static UserDto convertUserToDto(User user) {
+        if (user == null) return null;
+        return UserDto.builder()
+                .id(user.getId())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .email(user.getEmail())
+                .role(user.getRole())
+                .active(user.isActive())
+                .build();
+
     }
 
     public static List<User> convertDtoListToUserList(List<UserDto> userDtos) {
