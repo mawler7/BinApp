@@ -44,7 +44,7 @@ public class Order implements Serializable {
     private User user;
 
     @Column(nullable = false)
-    private String date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private boolean delivered;

@@ -10,13 +10,11 @@ public class ContainerConverter {
         return ContainerDto.builder()
                 .id(container.getId())
                 .amount(container.getAmount())
-                .containerName(container.getName())
+                .name(container.getName())
                 .width(container.getWidth())
                 .length(container.getLength())
                 .height(container.getHeight())
-                .volume(container.getVolume())
                 .price(container.getPrice())
-                .containerTotal(container.getTotal())
                 .build();
     }
 
@@ -25,13 +23,11 @@ public class ContainerConverter {
         return Container.builder()
                 .id(containerDto.getId())
                 .amount(containerDto.getAmount())
-                .name(containerDto.getContainerName())
+                .name(containerDto.getName())
                 .width(containerDto.getWidth())
                 .length(containerDto.getLength())
                 .height(containerDto.getHeight())
-                .volume(containerDto.getVolume())
                 .price(containerDto.getPrice())
-                .total(containerDto.getContainerTotal())
                 .build();
     }
 

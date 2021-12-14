@@ -1,11 +1,11 @@
-package com.management.warehouse.exception;
+package com.management.warehouse.exception.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class InvalidEmailException extends IllegalArgumentException {
-    public InvalidEmailException(String message) {
+public class UserAlreadyExistException extends RuntimeException {
+    public UserAlreadyExistException(String message) {
         super(message);
     }
 }
