@@ -1,13 +1,18 @@
 package com.management.warehouse.model.order;
 
+import com.management.warehouse.model.container.Container;
 import com.management.warehouse.model.container.ContainerRepository;
 import com.management.warehouse.model.truck.TruckRepository;
 import com.management.warehouse.model.user.UserRepository;
+import com.management.warehouse.model.user.UserRole;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -28,6 +33,11 @@ public class OrderService {
     }
 
     public OrderDto addOrder(OrderDto orderDto) {
+        if (orderDto.getUser().getRole() == UserRole.ROLE_USER){
+            orderDto.setType("loading");
+        } else{
+            orderDto.setType("unloading");
+        }
         Order order = Order.builder()
                 .id(UUID.randomUUID())
                 .truck(truckRepository.findByRegNumberAllIgnoreCase(orderDto.getTruck().getRegNumber()))
@@ -35,6 +45,7 @@ public class OrderService {
                 .amountOfOrderedContainers(orderDto.getAmountOfOrderedContainers())
                 .type(orderDto.getType())
                 .user(userRepository.findByEmail(orderDto.getUser().getEmail()))
+                .type(orderDto.getType())
                 .date(LocalDateTime.now())
                 .delivered(false)
                 .dateDelivered(null)
@@ -43,27 +54,27 @@ public class OrderService {
         return OrderConverter.convertToOrderDto(order);
     }
 
-//    public Page<Order> getOrdersPaginated(Pageable pageable) {
-//        return orderRepository.findAll(pageable);
-//    }
-//
-//    public List<Order> setDelivered(UUID id) {
-//        Optional<Order> order = orderRepository.findById(id);
-//        if (order.isPresent()) {
-//            Order od = order.get();
-//            od.setDelivered(true);
-//            od.setDateDelivered(LocalDateTime.now());
-//            orderRepository.save(od);
-//            Container container = containerRepository.getById(od.getContainer().getId());
-//            if (od.getType().equalsIgnoreCase("loading")) {
-//                container.setAmount(container.getAmount() - od.getAmount());
-//            } else {
-//                container.setAmount(container.getAmount() + od.getAmount());
-//            }
-//            containerRepository.save(container);
-//        }
-//        return orderRepository.findAll();
-//    }
+    public Page<Order> getOrdersPaginated(Pageable pageable) {
+        return orderRepository.findAll(pageable);
+    }
+
+    public List<Order> setDelivered(UUID id) {
+        Optional<Order> order = orderRepository.findById(id);
+        if (order.isPresent()) {
+            Order od = order.get();
+            od.setDelivered(true);
+            od.setDateDelivered(LocalDateTime.now());
+            orderRepository.save(od);
+            Container container = containerRepository.getById(od.getContainer().getId());
+            if (od.getType().equalsIgnoreCase("loading")) {
+                container.setContainersAmount(container.getContainersAmount() - od.getAmountOfOrderedContainers());
+            } else {
+                container.setContainersAmount(container.getContainersAmount() + od.getAmountOfOrderedContainers());
+            }
+            containerRepository.save(container);
+        }
+        return orderRepository.findAll();
+    }
 //
 //
 //    public void saveOrder(Order order) {

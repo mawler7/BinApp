@@ -1,5 +1,6 @@
 package com.management.warehouse.model.truck;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -21,6 +22,7 @@ public class Truck implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO, generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
 
     @Column(nullable = false, unique = true)
