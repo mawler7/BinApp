@@ -11,15 +11,15 @@ CREATE TABLE IF NOT EXISTS USERS
 
 CREATE TABLE IF NOT EXISTS CONTAINERS
 (
-    ID     BINARY         NOT NULL PRIMARY KEY,
-    AMOUNT int            NOT NULL,
-    NAME   varchar(10)    NOT NULL,
-    WIDTH  int            NOT NULL,
-    LENGTH int            NOT NULL,
-    HEIGHT int            NOT NULL,
-    VOLUME decimal(10, 0) NOT NULL,
-    PRICE  decimal(10, 0) NOT NULL,
-    TOTAL  decimal(10, 0) NOT NULL
+    ID                BINARY         NOT NULL PRIMARY KEY,
+    CONTAINERS_AMOUNT int            NOT NULL,
+    NAME              varchar(10)    NOT NULL,
+    WIDTH             int            NOT NULL,
+    LENGTH            int            NOT NULL,
+    HEIGHT            int            NOT NULL,
+    VOLUME            decimal(10, 0) NOT NULL,
+    PRICE             decimal(10, 0) NOT NULL,
+    TOTAL             decimal(10, 0) NOT NULL
 );
 
 
@@ -33,15 +33,15 @@ CREATE TABLE IF NOT EXISTS TRUCKS
 
 CREATE TABLE IF NOT EXISTS ORDERS
 (
-    ID             BINARY NOT NULL PRIMARY KEY,
-    AMOUNT         int         DEFAULT NULL,
-    DATE           datetime    DEFAULT NULL,
-    TYPE           varchar(9)  DEFAULT NULL,
-    truck_id       BINARY      DEFAULT NULL,
-    container_id   BINARY      DEFAULT NULL,
-    user_id        BINARY      DEFAULT NULL,
-    date_delivered datetime(6) DEFAULT NULL,
-    delivered      BOOLEAN     DEFAULT NULL,
+    ID                           BINARY NOT NULL PRIMARY KEY,
+    AMOUNT_OF_ORDERED_CONTAINERS int         DEFAULT NULL,
+    DATE                         datetime    DEFAULT NULL,
+    TYPE                         varchar(9)  DEFAULT NULL,
+    truck_id                     BINARY      DEFAULT NULL,
+    container_id                 BINARY      DEFAULT NULL,
+    user_id                      BINARY      DEFAULT NULL,
+    date_delivered               datetime(6) DEFAULT NULL,
+    delivered                    BOOLEAN     DEFAULT NULL,
     CONSTRAINT FK2bjl2iv61c4cst7rnd3husyfq
         FOREIGN KEY (truck_id) REFERENCES TRUCKS (id),
     CONSTRAINT FK2bjl2iv61c4cst7rnd3husyfx

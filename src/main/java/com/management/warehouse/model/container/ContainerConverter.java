@@ -9,7 +9,7 @@ public class ContainerConverter {
         if (container == null) return null;
         return ContainerDto.builder()
                 .id(container.getId())
-                .amount(container.getAmount())
+                .containersAmount(container.getContainersAmount())
                 .name(container.getName())
                 .width(container.getWidth())
                 .length(container.getLength())
@@ -22,7 +22,7 @@ public class ContainerConverter {
         if (containerDto == null) return null;
         return Container.builder()
                 .id(containerDto.getId())
-                .amount(containerDto.getAmount())
+                .containersAmount(containerDto.getContainersAmount())
                 .name(containerDto.getName())
                 .width(containerDto.getWidth())
                 .length(containerDto.getLength())

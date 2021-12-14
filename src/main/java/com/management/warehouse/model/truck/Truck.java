@@ -23,7 +23,7 @@ public class Truck implements Serializable {
     @GenericGenerator(name = "uuid2", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String regNumber;
 
     @Column(nullable = false)

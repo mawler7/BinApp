@@ -28,7 +28,7 @@ public class Container implements Serializable {
     private UUID id;
 
     @Column(nullable = false)
-    private int amount;
+    private int containersAmount;
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -59,11 +59,11 @@ public class Container implements Serializable {
 
         Container container = (Container) o;
 
-        return new EqualsBuilder().append(amount, container.amount).append(width, container.width).append(length, container.length).append(height, container.height).append(volume, container.volume).append(price, container.price).append(total, container.total).append(id, container.id).append(name, container.name).isEquals();
+        return new EqualsBuilder().append(containersAmount, container.containersAmount).append(width, container.width).append(length, container.length).append(height, container.height).append(volume, container.volume).append(price, container.price).append(total, container.total).append(id, container.id).append(name, container.name).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(amount).append(name).append(width).append(length).append(height).append(volume).append(price).append(total).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(containersAmount).append(name).append(width).append(length).append(height).append(volume).append(price).append(total).toHashCode();
     }
 }

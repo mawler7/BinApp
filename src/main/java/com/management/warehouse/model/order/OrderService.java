@@ -1,5 +1,8 @@
 package com.management.warehouse.model.order;
 
+import com.management.warehouse.model.container.ContainerRepository;
+import com.management.warehouse.model.truck.TruckRepository;
+import com.management.warehouse.model.user.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +16,9 @@ import java.util.stream.Collectors;
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final ContainerRepository containerRepository;
+    private final TruckRepository truckRepository;
+    private final UserRepository userRepository;
 
     public List<OrderDto> getAllOrders() {
         return orderRepository.findAll()
@@ -24,15 +30,16 @@ public class OrderService {
     public OrderDto addOrder(OrderDto orderDto) {
         Order order = Order.builder()
                 .id(UUID.randomUUID())
-                .truck(orderDto.getTruck())
-                .container(orderDto.getContainer())
-                .amount(orderDto.getAmount())
+                .truck(truckRepository.findByRegNumberAllIgnoreCase(orderDto.getTruck().getRegNumber()))
+                .container(containerRepository.findByNameAllIgnoreCase(orderDto.getContainer().getName()))
+                .amountOfOrderedContainers(orderDto.getAmountOfOrderedContainers())
                 .type(orderDto.getType())
-                .user(orderDto.getUser())
+                .user(userRepository.findByEmail(orderDto.getUser().getEmail()))
                 .date(LocalDateTime.now())
                 .delivered(false)
                 .dateDelivered(null)
                 .build();
+        orderRepository.save(order);
         return OrderConverter.convertToOrderDto(order);
     }
 

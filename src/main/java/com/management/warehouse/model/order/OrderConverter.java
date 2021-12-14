@@ -11,7 +11,7 @@ public class OrderConverter {
                 .id(order.getId())
                 .truck(order.getTruck())
                 .container(order.getContainer())
-                .amount(order.getAmount())
+                .amountOfOrderedContainers(order.getAmountOfOrderedContainers())
                 .type(order.getType())
                 .user(order.getUser())
                 .build();
@@ -23,7 +23,7 @@ public class OrderConverter {
                 .id(orderDto.getId())
                 .truck(orderDto.getTruck())
                 .container(orderDto.getContainer())
-                .amount(orderDto.getAmount())
+                .amountOfOrderedContainers(orderDto.getAmountOfOrderedContainers())
                 .type(orderDto.getType())
                 .user(orderDto.getUser())
                 .build();
