@@ -2,6 +2,7 @@ package com.management.warehouse.model.order;
 
 import com.management.warehouse.model.container.Container;
 import com.management.warehouse.model.container.ContainerRepository;
+import com.management.warehouse.model.truck.Truck;
 import com.management.warehouse.model.truck.TruckRepository;
 import com.management.warehouse.model.user.UserRepository;
 import com.management.warehouse.model.user.UserRole;
@@ -33,6 +34,17 @@ public class OrderService {
     }
 
     public OrderDto addOrder(OrderDto orderDto) {
+
+        if(truckRepository.findByRegNumberAllIgnoreCase(orderDto.getTruck().getRegNumber()) == null){
+            Truck truck = Truck.builder()
+                    .id(UUID.randomUUID())
+                    .regNumber(orderDto.getTruck().getRegNumber())
+                    .truckType(orderDto.getTruck().getTruckType())
+                    .maxVolume(orderDto.getTruck().getMaxVolume())
+                    .build();
+            truckRepository.save(truck);
+        }
+
         if (orderDto.getUser().getRole() == UserRole.ROLE_USER){
             orderDto.setType("loading");
         } else{
