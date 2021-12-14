@@ -27,7 +27,7 @@ public class TruckService {
 
 
     public TruckDto registerNewTruck(TruckDto truckDto) {
-        if (truckRepository.findByRegNumberAllIgnoreCase(truckDto.getRegNumber()).isPresent()) {
+        if (truckRepository.findByRegNumberAllIgnoreCase(truckDto.getRegNumber()) !=  null) {
             throw new TruckAlreadyExistException("Truck with the following regNumber already exists: " + truckDto.getRegNumber());
         }
         Truck truck = TruckConverter.convertToTruck(truckDto);

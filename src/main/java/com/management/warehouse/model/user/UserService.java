@@ -34,7 +34,7 @@ public class UserService {
         if (!matcher.find()) {
             throw new InvalidEmailException("Invalid email provided: " + email);
         }
-        if (userRepository.findByEmailAllIgnoreCase(email).isPresent()) {
+        if (userRepository.findByEmailAllIgnoreCase(email) != null) {
             throw new UserAlreadyExistException("User with the following email already exists: " + email);
         }
     }

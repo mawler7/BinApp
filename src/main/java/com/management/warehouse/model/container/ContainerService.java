@@ -27,13 +27,13 @@ public class ContainerService {
     }
 
     public ContainerDto registerNewContainer(ContainerDto containerDto) {
-        if (containerRepository.findByNameAllIgnoreCase(containerDto.getName()).isPresent()) {
+        if (containerRepository.findByNameAllIgnoreCase(containerDto.getName()) != null) {
             throw new ContainerAlreadyExistException("Container with the following name already exists: " + containerDto.getName());
         }
         Container container = ContainerConverter.convertToContainer(containerDto);
         container.setId(UUID.randomUUID());
         container.setVolume(container.getLength() * container.getHeight() * container.getWidth());
-        container.setTotal(container.getPrice() * container.getAmount());
+        container.setTotal(container.getPrice() * container.getContainersAmount());
         containerRepository.save(container);
         return ContainerConverter.convertToContainerDto(container);
     }

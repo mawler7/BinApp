@@ -4,10 +4,16 @@ package com.management.warehouse.model.order;
 import com.management.warehouse.model.container.ContainerRepository;
 import com.management.warehouse.model.truck.TruckRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/order")
@@ -16,8 +22,6 @@ public class OrderController {
 
 
     private final OrderService orderService;
-    private final TruckRepository truckRepository;
-    private final ContainerRepository containerRepository;
 
     @PostMapping("/")
     public OrderDto addOrder(@Valid @RequestBody OrderDto orderDto) {
@@ -29,44 +33,22 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
-//    @RequestMapping("/list")
-//    public String getAllOrders(Model model) {
-//        model.addAttribute("order", orderService.getAllOrders());
-//        return "order";
-//    }
-//
-//    @RequestMapping("/paginated")
-//    public String getOrdersPaginated(Model model, @RequestParam("page") Optional<Integer> page) {
-//        int currentPage = page.orElse(1);
-//        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
-//        model.addAttribute("orderPage", orderPage);
-//        int totalPages = orderPage.getTotalPages();
-//        if (totalPages > 0) {
-//            List<Integer> pageNumbers = new ArrayList<>();
-//            for (int i = 1; i <= totalPages; i++) {
-//                pageNumbers.add(i);
-//            }
-//            model.addAttribute("pageNumbers", pageNumbers);
-//        }
-//        return "order";
-//    }
-//
-//    @GetMapping("/delivered")
-//    public String setDelivered(Model model, @RequestParam("id") Optional<UUID> id, @RequestParam("page") Optional<Integer> page) {
-//        orderService.setDelivered(id.get());
-//        int currentPage = page.orElse(1);
-//        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
-//        model.addAttribute("orderPage", orderPage);
-//        int totalPages = orderPage.getTotalPages();
-//        if (totalPages > 0) {
-//            List<Integer> pageNumbers = new ArrayList<>();
-//            for (int i = 1; i <= totalPages; i++) {
-//                pageNumbers.add(i);
-//            }
-//            model.addAttribute("pageNumbers", pageNumbers);
-//        }
-//        return "order";
-//    }
+    @GetMapping("/delivered/{id}")
+    public String setDelivered(Model model, @PathVariable("id") Optional<UUID> id, @RequestParam("page") Optional<Integer> page) {
+        orderService.setDelivered(id.get());
+        int currentPage = page.orElse(1);
+        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
+        model.addAttribute("orderPage", orderPage);
+        int totalPages = orderPage.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = new ArrayList<>();
+            for (int i = 1; i <= totalPages; i++) {
+                pageNumbers.add(i);
+            }
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+        return "order";
+    }
 //
 //    @GetMapping("/create")
 //    public String createOrder(Model model) {
@@ -115,6 +97,29 @@ public class OrderController {
 //        orderService.updateOrder(order);
 //        return "redirect:paginated";
 //    }
+
+    //    @RequestMapping("/list")
+//    public String getAllOrders(Model model) {
+//        model.addAttribute("order", orderService.getAllOrders());
+//        return "order";
+//    }
+//
+//    @RequestMapping("/paginated")
+//    public String getOrdersPaginated(Model model, @RequestParam("page") Optional<Integer> page) {
+//        int currentPage = page.orElse(1);
+//        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
+//        model.addAttribute("orderPage", orderPage);
+//        int totalPages = orderPage.getTotalPages();
+//        if (totalPages > 0) {
+//            List<Integer> pageNumbers = new ArrayList<>();
+//            for (int i = 1; i <= totalPages; i++) {
+//                pageNumbers.add(i);
+//            }
+//            model.addAttribute("pageNumbers", pageNumbers);
+//        }
+//        return "order";
+//    }
+//
 }
 
 

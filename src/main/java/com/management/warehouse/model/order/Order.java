@@ -34,7 +34,7 @@ public class Order implements Serializable {
     private Container container;
 
     @Column(nullable = false)
-    private int amount;
+    private int amountOfOrderedContainers;
 
     @Column(nullable = false)
     private String type;
@@ -60,11 +60,11 @@ public class Order implements Serializable {
 
         Order order = (Order) o;
 
-        return new EqualsBuilder().append(amount, order.amount).append(delivered, order.delivered).append(id, order.id).append(truck, order.truck).append(container, order.container).append(type, order.type).append(user, order.user).append(date, order.date).append(dateDelivered, order.dateDelivered).isEquals();
+        return new EqualsBuilder().append(amountOfOrderedContainers, order.amountOfOrderedContainers).append(delivered, order.delivered).append(id, order.id).append(truck, order.truck).append(container, order.container).append(type, order.type).append(user, order.user).append(date, order.date).append(dateDelivered, order.dateDelivered).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(truck).append(container).append(amount).append(type).append(user).append(date).append(delivered).append(dateDelivered).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(truck).append(container).append(amountOfOrderedContainers).append(type).append(user).append(date).append(delivered).append(dateDelivered).toHashCode();
     }
 }

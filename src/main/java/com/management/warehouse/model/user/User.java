@@ -1,6 +1,7 @@
 package com.management.warehouse.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -29,6 +30,7 @@ public class User implements UserDetails {
     @Id
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(updatable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
 
     @NotBlank(message = "First name is mandatory")

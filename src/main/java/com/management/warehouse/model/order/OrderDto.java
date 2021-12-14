@@ -19,7 +19,7 @@ public class OrderDto {
     private UUID id;
     private Truck truck;
     private Container container;
-    private int amount;
+    private int amountOfOrderedContainers;
     private String type;
     private User user;
 }

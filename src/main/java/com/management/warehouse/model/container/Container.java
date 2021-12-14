@@ -1,5 +1,6 @@
 package com.management.warehouse.model.container;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -25,30 +26,38 @@ public class Container implements Serializable {
     @Id
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private UUID id;
 
     @Column(nullable = false)
-    private int amount;
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    private int containersAmount;
 
     @Column(nullable = false, unique = true)
     private String name;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double width;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double length;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double height;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double volume;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double price;
 
     @Column(nullable = false)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private double total;
 
     @Override
@@ -59,11 +68,11 @@ public class Container implements Serializable {
 
         Container container = (Container) o;
 
-        return new EqualsBuilder().append(amount, container.amount).append(width, container.width).append(length, container.length).append(height, container.height).append(volume, container.volume).append(price, container.price).append(total, container.total).append(id, container.id).append(name, container.name).isEquals();
+        return new EqualsBuilder().append(containersAmount, container.containersAmount).append(width, container.width).append(length, container.length).append(height, container.height).append(volume, container.volume).append(price, container.price).append(total, container.total).append(id, container.id).append(name, container.name).isEquals();
     }
 
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(amount).append(name).append(width).append(length).append(height).append(volume).append(price).append(total).toHashCode();
+        return new HashCodeBuilder(17, 37).append(id).append(containersAmount).append(name).append(width).append(length).append(height).append(volume).append(price).append(total).toHashCode();
     }
 }

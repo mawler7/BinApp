@@ -19,6 +19,6 @@ public class ContainerDto {
     private double length;
     private double height;
     private double price;
-    private int amount;
+    private int containersAmount;
 
 }

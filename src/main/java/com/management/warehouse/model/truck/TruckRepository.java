@@ -9,6 +9,6 @@ import java.util.UUID;
 @Repository
 public interface TruckRepository extends JpaRepository<Truck, UUID> {
 
-    Optional<Truck> findByRegNumberAllIgnoreCase(String regNumber);
+    Truck findByRegNumberAllIgnoreCase(String regNumber);
 
 }
