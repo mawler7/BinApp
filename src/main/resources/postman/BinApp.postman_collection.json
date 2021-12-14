@@ -424,18 +424,31 @@
 			"item": [
 				{
 					"name": "Orders",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://localhost:8080/order",
+							"raw": "http://localhost:8080/order/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "8080",
 							"path": [
-								"order"
+								"order",
+								""
 							]
 						}
 					},
@@ -448,7 +461,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n  \"amount\": 0,\r\n  \"container\": {\r\n    \"amount\": 0,\r\n    \"height\": 0,\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"length\": 0,\r\n    \"name\": \"string\",\r\n    \"price\": 0,\r\n    \"total\": 0,\r\n    \"volume\": 0,\r\n    \"width\": 0\r\n  },\r\n  \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n  \"truck\": {\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"maxVolume\": 0,\r\n    \"regNumber\": \"string\",\r\n    \"truckType\": \"string\"\r\n  },\r\n  \"type\": \"string\",\r\n  \"user\": {\r\n    \"email\": \"string\",\r\n    \"firstName\": \"string\",\r\n    \"id\": \"3fa85f64-5717-4562-b3fc-2c963f66afa6\",\r\n    \"lastName\": \"string\"\r\n  }\r\n}",
+							"raw": "{\r\n  \"amountOfOrderedContainers\": 25,\r\n  \"container\": {\r\n    \"name\": \"CON1\"\r\n  },\r\n  \"truck\": {\r\n    \"regNumber\": \"PO12345\"\r\n  },\r\n  \"user\": {\r\n    \"email\": \"jan.blachowicz@gmail.com\"\r\n  }\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
