@@ -1,9 +1,9 @@
 package com.management.warehouse.model.user;
 
 
-import com.management.warehouse.exception.InvalidEmailException;
-import com.management.warehouse.exception.InvalidUserOrPasswordException;
-import com.management.warehouse.exception.UserAlreadyExistException;
+import com.management.warehouse.exception.registration.InvalidEmailException;
+import com.management.warehouse.exception.registration.InvalidUserOrPasswordException;
+import com.management.warehouse.exception.user.UserAlreadyExistException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +59,7 @@ public class UserService {
 
         User user = User.builder()
                 .id(UUID.randomUUID())
-                .firstName(userRegistrationDto.getFistName())
+                .firstName(userRegistrationDto.getFirstName())
                 .lastName(userRegistrationDto.getLastName())
                 .active(true)
                 .password(passwordEncoder.encode(userRegistrationDto.getPassword()))

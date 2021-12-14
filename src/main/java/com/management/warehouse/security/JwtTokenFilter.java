@@ -1,6 +1,6 @@
 package com.management.warehouse.security;
 
-import com.management.warehouse.exception.InvalidUserOrPasswordException;
+import com.management.warehouse.exception.registration.InvalidUserOrPasswordException;
 import com.management.warehouse.model.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

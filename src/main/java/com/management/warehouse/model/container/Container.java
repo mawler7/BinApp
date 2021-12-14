@@ -1,6 +1,8 @@
 package com.management.warehouse.model.container;
 
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Column;
@@ -32,13 +34,13 @@ public class Container implements Serializable {
     private String name;
 
     @Column(nullable = false)
-    private int width;
+    private double width;
 
     @Column(nullable = false)
-    private int length;
+    private double length;
 
     @Column(nullable = false)
-    private int height;
+    private double height;
 
     @Column(nullable = false)
     private double volume;
@@ -49,5 +51,19 @@ public class Container implements Serializable {
     @Column(nullable = false)
     private double total;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
 
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Container container = (Container) o;
+
+        return new EqualsBuilder().append(amount, container.amount).append(width, container.width).append(length, container.length).append(height, container.height).append(volume, container.volume).append(price, container.price).append(total, container.total).append(id, container.id).append(name, container.name).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(id).append(amount).append(name).append(width).append(length).append(height).append(volume).append(price).append(total).toHashCode();
+    }
 }

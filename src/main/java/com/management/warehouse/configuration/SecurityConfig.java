@@ -1,7 +1,7 @@
 package com.management.warehouse.configuration;
 
 
-import com.management.warehouse.exception.UserNotFoundException;
+import com.management.warehouse.exception.user.UserNotFoundException;
 import com.management.warehouse.model.user.UserRepository;
 import com.management.warehouse.security.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;

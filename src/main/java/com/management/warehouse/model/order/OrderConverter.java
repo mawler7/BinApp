@@ -14,9 +14,6 @@ public class OrderConverter {
                 .amount(order.getAmount())
                 .type(order.getType())
                 .user(order.getUser())
-                .date(order.getDate())
-                .delivered(order.isDelivered())
-                .dateDelivered(order.getDateDelivered())
                 .build();
     }
 
@@ -29,9 +26,6 @@ public class OrderConverter {
                 .amount(orderDto.getAmount())
                 .type(orderDto.getType())
                 .user(orderDto.getUser())
-                .date(orderDto.getDate())
-                .delivered(orderDto.isDelivered())
-                .dateDelivered(orderDto.getDateDelivered())
                 .build();
     }
 

@@ -14,13 +14,11 @@ import java.util.UUID;
 public class ContainerDto {
 
     private UUID id;
-    private int amount;
-    private String containerName;
-    private int width;
-    private int length;
-    private int height;
-    private double volume;
+    private String name;
+    private double width;
+    private double length;
+    private double height;
     private double price;
-    private double containerTotal;
+    private int amount;
 
 }

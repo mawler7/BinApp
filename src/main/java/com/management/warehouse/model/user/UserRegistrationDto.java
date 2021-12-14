@@ -10,7 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 public class UserRegistrationDto {
 
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)

@@ -2,6 +2,8 @@ package com.management.warehouse.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -58,6 +60,7 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(getRole().name()));
     }
+
     @JsonIgnore
     @Override
     public String getUsername() {
@@ -81,11 +84,26 @@ public class User implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
-    
+
     @JsonIgnore
     @Override
     public boolean isEnabled() {
         return isActive();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        return new EqualsBuilder().append(active, user.active).append(id, user.id).append(firstName, user.firstName).append(lastName, user.lastName).append(email, user.email).append(password, user.password).append(role, user.role).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(id).append(firstName).append(lastName).append(email).append(password).append(role).append(active).toHashCode();
+    }
 }
