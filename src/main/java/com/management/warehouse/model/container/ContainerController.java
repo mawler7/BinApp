@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/container")
+@RequestMapping("/containers")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/containers")
 public class ContainerController {
 
     private final ContainerService containerService;

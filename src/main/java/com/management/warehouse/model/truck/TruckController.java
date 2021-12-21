@@ -9,8 +9,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/truck")
+@RequestMapping("/trucks")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/")
 public class TruckController {
 
     private final TruckService truckService;
