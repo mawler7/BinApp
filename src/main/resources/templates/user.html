@@ -33,18 +33,19 @@
             <td><span th:text="${user.login}"></span></td>
             <td><span th:text="${user.firstName}+' '+${user.lastName}"></span></td>
             <td><span th:text="${user.email}"></span></td>
-            <td><span th:each="role, iterStat: ${user.roles}" th:text="!${iterStat.last} ? ${role.name}+',' : ${role.name}"></span></td>
+            <td><span th:each="role, iterStat: ${user.roles}"
+                      th:text="!${iterStat.last} ? ${role.name}+',' : ${role.name}"></span></td>
             <td>
                 <form th:action="@{update}" method="post">
                     <button th:type="submit" class="btn btn-success" th:name="id" th:value="${user.id}">Edit</button>
                 </form>
             </td>
             <td>
-            <form th:action="@{delete}" method="post">
-                <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${user.id}">Delete
-                </button>
-            </form>
-        </td>
+                <form th:action="@{delete}" method="post">
+                    <button th:type="submit" class="btn btn-warning" th:name="id" th:value="${user.id}">Delete
+                    </button>
+                </form>
+            </td>
         </tr>
         </tbody>
     </table>
@@ -54,6 +55,6 @@
            th:text="${pageNumber}"></a>
     </div>
 </div>
-<div th:replace="fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

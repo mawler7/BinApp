@@ -1,28 +1,17 @@
-import React, { Component } from 'react';
-import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import React, {Component} from 'react';
+import {Button, Container, Form, FormGroup, Input, Label} from 'reactstrap';
 
 class ContainerForm extends Component {
-
-
-    
-   emptyItem = {
-
-        amountOfOrderedContainers: '',
-        container: {name: ''},
-        truck: {regNumber: ''},
-        user: {email: ''}
-        }
 
     constructor(props) {
         super(props);
         this.state = {
-            item: this.emptyItem,
-            containerNames:[],
-            selectedContainerName:'',
+            containerNames: [],
+            selectedContainerName: '',
             amountOfOrderedContainers: 0,
             trucks: [],
-            selectedTruck:'',
-            email: '',    
+            selectedTruck: '',
+            email: '',
         };
         this.handleTruckChange = this.handleTruckChange.bind(this);
         this.handleEmailChange = this.handleEmailChange.bind(this);
@@ -31,12 +20,9 @@ class ContainerForm extends Component {
     }
 
     async componentDidMount() {
-        // if(this.props.match.params.id !== 'new') {
-        // }
-        // const order = await (await fetch(`/orders/`)).json();
         const containersResponse = await fetch(`http://localhost:8080/containers/`)
         const containers = await containersResponse.json();
-        const containerNames = containers.map((value)=> value.name)
+        const containerNames = containers.map((value) => value.name)
 
         const truckResponse = await fetch(`http://localhost:8080/trucks/`)
         const trucks = await truckResponse.json();
@@ -48,89 +34,87 @@ class ContainerForm extends Component {
             trucks: truckRegNumbers,
             selectedTruck: truckRegNumbers[0],
         });
-        console.log('ORDER\n', containerNames);
     }
 
-    // handleChange(event) {
-    //     const target = event.target;
-    //     const value = target.value;
-    //     const name = target.name;
-    //     let item = {...this.state.item};
-    //     item[name] = value;
-    //     this.setState({item});
-    // }
+    handleContainerNameChange(event) {
+        this.setState({selectedContainerName: event.target.value})
+    }
 
-    handleChange(event) {
-        let obj = JSON.parse(event.target.value); //object
-      }
+    handleEmailChange(event) {
+        this.setState({email: event.target.value})
+    }
 
-    handleContainerNameChange(event){
-        this.setState({selectedContainerName:event.target.value})
-    }  
-    handleEmailChange(event){
-        this.setState({email:event.target.value})
-    }  
-    handleTruckChange(event){
-        this.setState({selectedTruck:event.target.value})
-    }  
-    handleContainerAmountChange(event){
-        this.setState({amountOfOrderedContainers:event.target.value})
-    }  
+    handleTruckChange(event) {
+        this.setState({selectedTruck: event.target.value})
+    }
 
-    async handleSubmit(event) {
+    handleContainerAmountChange(event) {
+        this.setState({amountOfOrderedContainers: event.target.value})
+    }
+
+    handleSubmit = (event) => {
         event.preventDefault();
-        const {item} = this.state;
-    
-        await fetch('http://localhost:8080/orders/', {
+
+        const item = {
+            "amountOfOrderedContainers": this.state.amountOfOrderedContainers,
+            "container": {
+                "name": this.state.selectedContainerName,
+            },
+            "truck": {
+                "regNumber": this.state.selectedTruck
+            },
+            "user": {
+                "email": this.state.email
+            }
+        }
+
+        alert('A form was submitted: ' + JSON.stringify(item));
+        fetch('http://localhost:8080/orders/', {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(item),
-        }).then(resp => resp.json());
+            body: JSON.stringify(item)
+        }).then(function (response) {
+            return response.json()
+        }).catch(e => console.log(e));
     }
-    
+
     render() {
-        const nameOptions = this.state.containerNames.map((value) => {return <option value={value}>{value}</option>})
-        const truckOptions = this.state.trucks.map((value) => {return <option value={value}>{value}</option>})
-        const {item} = this.state;
-        const title = <h2>{item.id ? 'Edit Order' : 'Add Order'}</h2>;
-    
-        console.log(nameOptions);
-                
+        const nameOptions = this.state.containerNames.map((value) => {
+            return <option key={value} value={value}>{value}</option>
+        })
+        const truckOptions = this.state.trucks.map((value) => {
+            return <option key={value} value={value}>{value}</option>
+        })
+
         return <div>
-            
+
 
             <Container>
-                {title}
                 <Form onSubmit={this.handleSubmit}>
                     <FormGroup>
                         <Label for="name">Container name</Label>
-                        <Input type="select" name="container" placeholder='Container name' id="container" value={this.state.selectedContainerName}
+                        <Input type="select" name="container" placeholder='Container name' id="container"
+                               value={this.state.selectedContainerName}
                                onChange={this.handleContainerNameChange} autoComplete="container">
-                                   {nameOptions}
-                               </Input>
+                            {nameOptions}
+                        </Input>
                     </FormGroup>
                     <FormGroup>
                         <Label for="containersAmount">Amount</Label>
-                        
-                        <Input type="number" name="containersAmount"placeholder='Ordered amount' id="amountOfOrderedContainers" value={this.state.amountOfOrderedContainers}
+
+                        <Input type="number" name="containersAmount" placeholder='Ordered amount'
+                               id="amountOfOrderedContainers" value={this.state.amountOfOrderedContainers}
                                onChange={this.handleContainerAmountChange} autoComplete="containersAmount"/>
                     </FormGroup>
                     <FormGroup>
                         <Label for="truck">Truck</Label>
-                        {/* <select onChange={this.handleChange}>
-                            {this.props.listOption.map((option, index) => 
-                            <option key={index} 
-                                value={JSON.stringify(option)}> 
-                                {option.name}
-                            </option>
-                            )}
-                        </select> */}
-                        <Input type="select" name="truck" placeholder='Registration number' id="truck" value={this.state.selectedTruck}
+                        <Input type="select" name="truck" placeholder='Registration number' id="truck"
+                               value={this.state.selectedTruck}
                                onChange={this.handleTruckChange} autoComplete="truck">
-                                   {truckOptions}
+                            {truckOptions}
                         </Input>
                     </FormGroup>
                     <FormGroup>
@@ -145,6 +129,7 @@ class ContainerForm extends Component {
             </Container>
         </div>
     }
-    
+
 }
+
 export default ContainerForm;

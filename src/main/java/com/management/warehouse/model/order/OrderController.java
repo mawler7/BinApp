@@ -1,8 +1,6 @@
 package com.management.warehouse.model.order;
 
 
-import com.management.warehouse.model.container.ContainerRepository;
-import com.management.warehouse.model.truck.TruckRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

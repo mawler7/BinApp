@@ -11,10 +11,10 @@
 <div class="container">
     <div class="starter-template">
         <h1>Warehouse</h1>
-        <h2 sec:authorize="hasAuthority('ADMIN')">1. <a th:href="@{/admin/page}">Visit  Admin Page</a></h2>
+        <h2 sec:authorize="hasAuthority('ADMIN')">1. <a th:href="@{/admin/page}">Visit Admin Page</a></h2>
         <h2 sec:authorize="hasAuthority('USER')">2. <a th:href="@{/user/paginated}">Visit User Page</a></h2>
     </div>
 </div>
-<div th:replace="fragments/footer :: footer" />
+<div th:replace="fragments/footer :: footer"/>
 </body>
 </html>

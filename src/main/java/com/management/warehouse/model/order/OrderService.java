@@ -33,9 +33,9 @@ public class OrderService {
     }
 
     public OrderDto addOrder(OrderDto orderDto) {
-        if (orderDto.getUser().getRole() == UserRole.ROLE_USER){
+        if (orderDto.getUser().getRole() == UserRole.ROLE_USER) {
             orderDto.setType("loading");
-        } else{
+        } else {
             orderDto.setType("unloading");
         }
         Order order = Order.builder()

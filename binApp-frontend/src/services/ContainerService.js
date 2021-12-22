@@ -4,7 +4,7 @@ const CONTAINERS_REST_API_URL = 'http://localhost:8080/containers/';
 
 class ContainerService {
 
-    getContainers(){
+    getContainers() {
         return axios.get(CONTAINERS_REST_API_URL);
     }
 }

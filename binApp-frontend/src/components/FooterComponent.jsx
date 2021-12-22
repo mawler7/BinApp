@@ -1,14 +1,12 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 
 
- class FooterComponent extends Component {
+class FooterComponent extends Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
 
-        this.state = {
-
-        }
+        this.state = {}
     }
 
 

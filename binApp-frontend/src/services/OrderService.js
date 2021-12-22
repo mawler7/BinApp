@@ -2,9 +2,9 @@ import axios from "axios";
 
 const ORDERS_REST_API_URL = 'http://localhost:8080/orders/';
 
-class OrderService{
+class OrderService {
 
-    getOrders(){
+    getOrders() {
         return axios.get(ORDERS_REST_API_URL);
     }
 }
