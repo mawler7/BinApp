@@ -20,12 +20,6 @@ class UserComponent extends React.Component {
     render() {
         return (
             <div>
-                <Navbar/>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
-                <br></br>
                 <h1 className="text-center">Users list</h1>
                 <table className="table table-striped table-bordered">
                     <thead>

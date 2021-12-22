@@ -20,7 +20,6 @@ class TruckComponent extends React.Component {
     render() {
         return (
             <div>
-                <Navbar/>
                 <br></br>
                 <br></br>
                 <br></br>

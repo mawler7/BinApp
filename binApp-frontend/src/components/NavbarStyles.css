@@ -1,9 +1,9 @@
 header {
     width: 100%;
     height: 100px;
-    position: absolute;
-    top: 0;
-    left: 0;
+    /* position: absolute; */
+    /* top: 0;
+    left: 0; */
     background-color: dimgray;
 }
 
@@ -35,9 +35,18 @@ header .logo img {
 }
 
 .nav-menu {
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 50vw;
     display: flex;
     align-items: center;
     justify-self: start;
+    list-style-type: none;
+}
+
+.nav-menu-wrapper {
+    position: relative;
 }
 
 .nav-item {
@@ -59,15 +68,15 @@ header .logo img {
         flex-direction: column;
         justify-content: center;
         background-color: darkgrey;
-        width: 100%;
+        width: 50vw;
         height: 100%;
         text-align: center;
         transition: 0.4s;
     }
 
     .nav-menu.active {
-        left: 0;
-    }
+        left: 0; 
+    } 
 
     .nav-item {
         margin: 1.5rem 0;

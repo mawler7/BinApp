@@ -7,7 +7,7 @@ import TruckListComponent from './components/TruckListComponent';
 import OrderListComponent from './components/OrderListComponent';
 import Home from './components/Home';
 import ContainerForm from './components/ContainerForm';
-
+import Navbar from './components/Navbar';
 
 function App() {
     return (
@@ -15,7 +15,7 @@ function App() {
         <div className="App">
 
             <div>
-                <div className='container'>
+                <Navbar />
                     <Routes>
                         <Route path="/" element={<Home/>}></Route>
                         <Route path="/users" element={<UserListComponent/>}></Route>
@@ -24,7 +24,6 @@ function App() {
                         <Route path="/orders/list/" element={<OrderListComponent/>}></Route>
                         <Route path="/orders/" element={<ContainerForm/>}></Route>
                     </Routes>
-                </div>
                 <FooterComponent/>
             </div>
         </div>

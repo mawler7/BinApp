@@ -2,9 +2,9 @@ import React, { Component, useState, useEffect } from "react";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 
 const ContainerForm = (props) => {
-  const [containerNames, setContainerNames] = useState([]);
-  const [amountOfOrderedContainers, setamountOfOrderedContainers] = useState(0);
-  const [trucks, setTrucks] = useState([]);
+  const [containerNameOptions, setContainerNameOptions] = useState([]);
+  const [amountOfOrderedContainers, setAmountOfOrderedContainers] = useState(0);
+  const [truckOptions, setTruckOptions] = useState([]);
   const [email, setEmail] = useState("");
   const [selectedContainerName, setSelectedContainerName] = useState("");
   const [selectedTruck, setSelectedTruck] = useState("");
@@ -21,28 +21,13 @@ const ContainerForm = (props) => {
       const trucks = await truckResponse.json();
       const truckRegNumbers = trucks.map((value) => value.regNumber);
 
-      setContainerNames(containerNames);
+      setContainerNameOptions(createOptions(containerNames));
       setSelectedContainerName(containerNames[0]);
-      setTrucks(truckRegNumbers);
+      setTruckOptions(createOptions(truckRegNumbers));
       setSelectedTruck(truckRegNumbers[0]);
+      setEmail(email);
     })();
   }, []);
-
-  const handleContainerNameChange = (event) => {
-    setSelectedContainerName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handleTruckChange = (event) => {
-    setSelectedTruck(event.target.value);
-  };
-
-  const handleContainerAmountChange = (event) => {
-    setamountOfOrderedContainers(event.target.value);
-  };
 
   const handleChange = (event, setter) => {
       setter(event.target.value)
@@ -78,24 +63,20 @@ const ContainerForm = (props) => {
       })
       .catch((e) => console.log(e));
   };
-
-  const nameOptions = containerNames.map((value) => {
-    return (
-      <option key={value} value={value}>
-        {value}
-      </option>
-    );
-  });
-  const truckOptions = trucks.map((value) => {
-    return (
-      <option key={value} value={value}>
-        {value}
-      </option>
-    );
-  });
-
+  
+   const createOptions = (values) => {
+    return values.map((value) => {
+      return (
+        <option key={value} value={value}>
+          {value}
+        </option>
+      );
+    });
+  }
+  
   return (
     <div>
+      <h1>Add order</h1>
       <Container>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
@@ -106,11 +87,10 @@ const ContainerForm = (props) => {
               placeholder="Container name"
               id="container"
               value={selectedContainerName}
-            //   onChange={handleContainerNameChange}
               onChange={(event) => handleChange(event, setSelectedContainerName)}
               autoComplete="container"
             >
-              {nameOptions}
+              {containerNameOptions}
             </Input>
           </FormGroup>
           <FormGroup>
@@ -122,7 +102,7 @@ const ContainerForm = (props) => {
               placeholder="Ordered amount"
               id="amountOfOrderedContainers"
               value={amountOfOrderedContainers}
-              onChange={handleContainerAmountChange}
+              onChange={(event) => handleChange(event, setAmountOfOrderedContainers)}
               autoComplete="containersAmount"
             />
           </FormGroup>
@@ -134,7 +114,7 @@ const ContainerForm = (props) => {
               placeholder="Registration number"
               id="truck"
               value={selectedTruck}
-              onChange={handleTruckChange}
+              onChange={(event) => handleChange(event, setSelectedTruck) }
               autoComplete="truck"
             >
               {truckOptions}
@@ -148,7 +128,8 @@ const ContainerForm = (props) => {
               id="email"
               placeholder="Email"
               value={email}
-              onChange={handleEmailChange}
+              // onChange={handleEmailChange}
+              onChange={(event) => handleChange(event, setEmail)}
               autoComplete="email"
             />
           </FormGroup>
