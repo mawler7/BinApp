@@ -1,13 +1,10 @@
 import React from 'react'
-import Navbar from './Navbar'
-import Footer from './FooterComponent'
-import ContainerForm from './ContainerForm'
+import Order from './Order'
 
 const Home = () => {
     return (
         <div>
-            <ContainerForm/>
-
+            <Order/>
         </div>
     )
 }

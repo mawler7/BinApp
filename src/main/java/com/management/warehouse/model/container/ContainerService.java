@@ -3,6 +3,10 @@ package com.management.warehouse.model.container;
 import com.management.warehouse.exception.FieldDoesNotExistException;
 import com.management.warehouse.exception.container.ContainerAlreadyExistException;
 import com.management.warehouse.exception.container.ContainerNotFoundException;
+import com.management.warehouse.exception.truck.TruckNotFoundException;
+import com.management.warehouse.model.truck.Truck;
+import com.management.warehouse.model.truck.TruckConverter;
+import com.management.warehouse.model.truck.TruckDto;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -47,6 +51,13 @@ public class ContainerService {
         Container container = findContainerInDatabase(id);
         return ContainerConverter.convertToContainerDto(container);
     }
+
+    public ContainerDto deleteContainer(UUID id){
+        Container containerToDelete = findContainerInDatabase(id);
+        containerRepository.deleteById(id);
+        return ContainerConverter.convertToContainerDto(containerToDelete);
+    }
+
 
     public ContainerDto updateContainer(UUID id, Map<Object, Object> fields) {
         Container container = findContainerInDatabase(id);

@@ -3,6 +3,9 @@ package com.management.warehouse.model.truck;
 import com.management.warehouse.exception.FieldDoesNotExistException;
 import com.management.warehouse.exception.truck.TruckAlreadyExistException;
 import com.management.warehouse.exception.truck.TruckNotFoundException;
+import com.management.warehouse.model.user.User;
+import com.management.warehouse.model.user.UserConverter;
+import com.management.warehouse.model.user.UserDto;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -38,14 +41,20 @@ public class TruckService {
 
 
     private Truck findTruckInDatabase(UUID id) {
-        return truckRepository.findById(id).orElseThrow(() ->
-                new TruckNotFoundException("Could not find truck with id: " + id));
-    }
+           return truckRepository.findById(id).orElseThrow(() ->
+                   new TruckNotFoundException("Could not find truck with id: " + id));
+       }
 
-    public TruckDto findById(UUID id) {
-        Truck truck = findTruckInDatabase(id);
-        return TruckConverter.convertToTruckDto(truck);
-    }
+       public TruckDto findById(UUID id) {
+           Truck truck = findTruckInDatabase(id);
+           return TruckConverter.convertToTruckDto(truck);
+       }
+
+       public TruckDto deleteTruck(UUID id){
+           Truck truckToDelete = findTruckInDatabase(id);
+           truckRepository.deleteById(id);
+           return TruckConverter.convertToTruckDto(truckToDelete);
+   }
 
     public TruckDto updateTruck(UUID id, Map<Object, Object> fields) {
         Truck truck = findTruckInDatabase(id);

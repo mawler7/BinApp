@@ -1,5 +1,6 @@
 package com.management.warehouse.model.container;
 
+import com.management.warehouse.model.truck.TruckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,4 +36,11 @@ public class ContainerController {
     public ContainerDto updateContainer(@PathVariable UUID id, @RequestBody Map<Object, Object> fields) {
         return containerService.updateContainer(id, fields);
     }
+
+    @DeleteMapping("/{id}")
+    public ContainerDto deleteContainer(@PathVariable UUID id){
+        return containerService.deleteContainer(id);
+    }
+
+
 }

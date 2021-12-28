@@ -11,7 +11,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/trucks")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000/")
+@CrossOrigin(origins = "http://localhost:3000/trucks")
 public class TruckController {
 
     private final TruckService truckService;
@@ -31,9 +31,13 @@ public class TruckController {
         return truckService.registerNewTruck(truckDto);
     }
 
-    @PatchMapping("/{id}")
+    @PostMapping("/edit/{id}")
     public TruckDto updateTruck(@PathVariable UUID id, @RequestBody Map<Object, Object> fields) {
         return truckService.updateTruck(id, fields);
     }
 
+    @DeleteMapping("{id}")
+    public TruckDto deleteTruck(@PathVariable UUID id){
+        return truckService.deleteTruck(id);
+    }
 }

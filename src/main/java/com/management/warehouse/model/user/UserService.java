@@ -4,6 +4,7 @@ package com.management.warehouse.model.user;
 import com.management.warehouse.exception.registration.InvalidEmailException;
 import com.management.warehouse.exception.registration.InvalidUserOrPasswordException;
 import com.management.warehouse.exception.user.UserAlreadyExistException;
+import com.management.warehouse.exception.user.UserNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -70,5 +71,13 @@ public class UserService {
 
     }
 
+    public User findById(UUID id) {
+        return userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("User doesn't exist with id: " + id));
 
+    }
+    public UserDto deleteUser(UUID id){
+        User userToDelete = findById(id);
+        userRepository.deleteById(id);
+        return UserConverter.convertUserToDto(userToDelete);
+    }
 }

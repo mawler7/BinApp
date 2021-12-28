@@ -1,12 +1,24 @@
-import axios from "axios";
+import httpClient from '../http-common'
 
-const TRUCKS_REST_API_URL = 'http://localhost:8080/trucks/';
-
-class TruckService{
-
-    getTrucks(){
-        return axios.get(TRUCKS_REST_API_URL);
-    }
+const getAll = () => {
+    return httpClient.get('/trucks/');
 }
 
-export default new TruckService();
+const create = data => {
+    return httpClient.post('/trucks/', data);
+}
+
+const get = id => {
+    return httpClient.get(`/trucks/${id}`);
+}
+
+const update = (id, data) => {
+    return httpClient.patch(`/trucks/edit/${id}`, data)
+}
+
+
+const remove = id => {
+    return httpClient.delete(`trucks/${id}`, id)
+}
+
+export default {getAll, create, get, remove, update }

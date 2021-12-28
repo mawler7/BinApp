@@ -1,6 +1,5 @@
 import React from "react";
 import UserService from "../services/UserService";
-import Navbar from "./Navbar";
 
 class UserComponent extends React.Component {
 
@@ -20,6 +19,7 @@ class UserComponent extends React.Component {
     render() {
         return (
             <div>
+                <div className="container">
                 <h1 className="text-center">Users list</h1>
                 <table className="table table-striped table-bordered">
                     <thead>
@@ -27,7 +27,6 @@ class UserComponent extends React.Component {
                         <td>User Fist Name</td>
                         <td>User Last Name</td>
                         <td>User email</td>
-                        <td>Actions</td>
                     </tr>
 
                     </thead>
@@ -39,13 +38,13 @@ class UserComponent extends React.Component {
                                     <td>{user.firstName}</td>
                                     <td>{user.lastName}</td>
                                     <td>{user.email}</td>
-                                    <td></td>
                                 </tr>
                         )
                     }
                     </tbody>
                 </table>
 
+            </div>
             </div>
         )
     }

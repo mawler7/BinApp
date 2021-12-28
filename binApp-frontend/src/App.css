@@ -46,3 +46,6 @@
     text-align: center;
     color: white;
 }
+.btn-success {
+    float: left;
+}

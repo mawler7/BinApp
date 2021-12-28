@@ -1,7 +1,13 @@
 package com.management.warehouse.model.order;
 
+import com.management.warehouse.exception.FieldDoesNotExistException;
+import com.management.warehouse.exception.OrderNotFoundException;
+import com.management.warehouse.exception.truck.TruckNotFoundException;
 import com.management.warehouse.model.container.Container;
 import com.management.warehouse.model.container.ContainerRepository;
+import com.management.warehouse.model.truck.Truck;
+import com.management.warehouse.model.truck.TruckConverter;
+import com.management.warehouse.model.truck.TruckDto;
 import com.management.warehouse.model.truck.TruckRepository;
 import com.management.warehouse.model.user.UserRepository;
 import com.management.warehouse.model.user.UserRole;
@@ -9,9 +15,12 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 
+import java.lang.reflect.Field;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -75,43 +84,34 @@ public class OrderService {
         }
         return orderRepository.findAll();
     }
-//
-//
-//    public void saveOrder(Order order) {
-//        orderRepository.save(order);
-//    }
-//
-//    public void save(UUID id) {
-//        Optional<Order> order = orderRepository.findById(id);
-//        orderRepository.save(order);
-//    }
-//
-//    public void deleteOrder(UUID id) {
-//
-//        Order order = orderRepository.getById(id);
-//        Container container = containerRepository.getById(order.getContainer().getId());
-//
-//        if (order.getType().equalsIgnoreCase("loading")) {
-//            container.setAmount(container.getAmount() - order.getAmount());
-//        } else {
-//            container.setAmount(container.getAmount() + order.getAmount());
-//        }
-//        containerRepository.save(container);
-//        orderRepository.deleteById(id);
-//    }
-//
-//    public Order findById(UUID id) {
-//        return orderRepository.getById(id);
-//    }
-//
-//
-//    public void updateOrder(Order order) {
-//        orderRepository.save(order);
-//    }
-//
-//    public List<Order> findAllByType(String type) {
-//        return orderRepository.findAllByType(type);
-//    }
 
+    private Order findOrderInDatabase(UUID id) {
+        return orderRepository.findById(id).orElseThrow(() ->
+                new OrderNotFoundException("Could not find truck with id: " + id));
+    }
 
+    public OrderDto findById(UUID id) {
+        Order order = findOrderInDatabase(id);
+        return OrderConverter.convertToOrderDto(order);
+    }
+
+    public OrderDto deleteOrder(UUID id){
+        Order orderToDelete = findOrderInDatabase(id);
+        orderRepository.deleteById(id);
+        return OrderConverter.convertToOrderDto(orderToDelete);
+    }
+
+    public OrderDto updateOrder(UUID id, Map<Object, Object> fields) {
+        Order order = findOrderInDatabase(id);
+        fields.forEach((key, value) -> {
+            Field field = ReflectionUtils.findField(Order.class, (String) key);
+            if (field == null) {
+                throw new FieldDoesNotExistException("Field " + key + " does not exist");
+            }
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, order, value);
+        });
+        orderRepository.save(order);
+        return OrderConverter.convertToOrderDto(order);
+    }
 }

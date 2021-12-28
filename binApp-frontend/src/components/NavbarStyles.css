@@ -47,6 +47,7 @@ header .logo img {
 
 .nav-menu-wrapper {
     position: relative;
+    display: flex;
 }
 
 .nav-item {

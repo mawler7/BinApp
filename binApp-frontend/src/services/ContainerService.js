@@ -1,12 +1,24 @@
-import axios from "axios";
+import httpClient from '../http-common'
 
-const CONTAINERS_REST_API_URL = 'http://localhost:8080/containers/';
-
-class ContainerService {
-
-    getContainers() {
-        return axios.get(CONTAINERS_REST_API_URL);
-    }
+const getAll = () => {
+    return httpClient.get('/containers/');
 }
 
-export default new ContainerService();
+const create = data => {
+    return httpClient.post('/containers/', data);
+}
+
+const get = id => {
+    return httpClient.get(`/containers/${id}`);
+}
+
+const update = (id, data) => {
+    return httpClient.patch(`/containers/edit/${id}`, data)
+}
+
+
+const remove = id => {
+    return httpClient.delete(`containers/${id}`, id)
+}
+
+export default {getAll, create, get, remove, update }

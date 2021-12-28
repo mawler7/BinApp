@@ -1,26 +1,40 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import OrderService from "../services/OrderService";
-import Navbar from "./Navbar";
+import { Link } from "react-router-dom";
 
-class OrderListComponent extends React.Component {
+const OrderListComponent = () => {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            orders: []
-        }
+    const [orders, setOrders] = useState([]);
+  
+    const init = () => {
+        OrderService.getAll()
+        .then(response => {
+          console.log('Printing truck data', response.data);
+          setOrders(response.data);
+        })
+        .catch(error => {
+          console.log('Something went wrong', error);
+        }) 
     }
+  
+    useEffect(() => {
+      init();
+    }, []);
 
-    componentDidMount() {
-        OrderService.getOrders().then((response) => {
-            console.log(response.data)
-            this.setState({orders: response.data})
-        });
-    }
-
-    render() {
+    const handleDelete = id => {
+        console.log('Printing id', id);
+        OrderService.remove(id)
+        .then(response =>{
+            console.log('Truck deleted successfully', response.data);
+        init();
+      })
+      .catch(error => {
+        console.log('Something went wrong', error);
+      })
+  }
         return (
-            <div>
+            
+                <div className="container">
                 <h1 className="text-center table-bordered">Order list</h1>
                 <table className="table table-striped table-bordered">
                     <thead>
@@ -29,30 +43,32 @@ class OrderListComponent extends React.Component {
                         <td>Amount</td>
                         <td>Truck Type</td>
                         <td>Reg Number</td>
-                        <td>User First Name</td>
-                        <td>User Last Name</td>
+                        <td>User Full Name</td>
+                        <td>Actions</td>
                     </tr>
 
                     </thead>
                     <tbody>
                     {
-                        this.state.orders.map(
-                            order =>
+                        orders.map(order => (
                                 <tr key={order.id}>
                                     <td>{order.container.name}</td>
                                     <td>{order.amountOfOrderedContainers}</td>
                                     <td>{order.truck.truckType}</td>
                                     <td>{order.truck.regNumber}</td>
-                                    <td>{order.user.firstName}</td>
-                                    <td>{order.user.lastName}</td>
+                                    <td>{order.user.lastName} {order.user.firstName}</td>
+                                    <td>
+                                        <Link to={`/orders/edit/${order.id}`} className='btn btn-primary mb-2'>Edit</Link>
+                                        <button className='btn btn-danger' onClick={()=>{handleDelete(order.id)}}>Delete</button>
+                                    </td>
                                 </tr>
-                        )
+                        ))
                     }
                     </tbody>
                 </table>
             </div>
-        )
+        );
     }
-}
+
 
 export default OrderListComponent
