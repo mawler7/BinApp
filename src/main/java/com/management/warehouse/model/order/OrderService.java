@@ -9,6 +9,7 @@ import com.management.warehouse.model.container.ContainerRepository;
 import com.management.warehouse.model.truck.Truck;
 import com.management.warehouse.model.truck.TruckConverter;
 import com.management.warehouse.model.truck.TruckDto;
+
 import com.management.warehouse.model.truck.TruckRepository;
 import com.management.warehouse.model.user.UserRepository;
 import com.management.warehouse.model.user.UserRole;
@@ -43,6 +44,7 @@ public class OrderService {
     }
 
     public OrderDto addOrder(OrderDto orderDto) {
+      
         if (userRepository.findByEmail(orderDto.getUser().getEmail()).getRole() == UserRole.ROLE_USER) {
             orderDto.setType("loading");
         } else {
