@@ -1,5 +1,6 @@
 package com.management.warehouse.model.container;
 
+import com.management.warehouse.model.truck.TruckDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -9,8 +10,9 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/container")
+@RequestMapping("/containers")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000/containers")
 public class ContainerController {
 
     private final ContainerService containerService;
@@ -34,4 +36,16 @@ public class ContainerController {
     public ContainerDto updateContainer(@PathVariable UUID id, @RequestBody Map<Object, Object> fields) {
         return containerService.updateContainer(id, fields);
     }
+
+    @DeleteMapping("/{id}")
+    public ContainerDto deleteContainer(@PathVariable UUID id){
+        return containerService.deleteContainer(id);
+    }
+
+    @PutMapping("{id}")
+    public ContainerDto editContainer(@PathVariable UUID id,  @RequestBody ContainerDto containerDto){
+        containerService.findById(id);
+        return containerService.editContainer(id, containerDto);
+    }
+
 }

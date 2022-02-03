@@ -27,7 +27,7 @@ public class TruckService {
 
 
     public TruckDto registerNewTruck(TruckDto truckDto) {
-        if (truckRepository.findByRegNumberAllIgnoreCase(truckDto.getRegNumber()) !=  null) {
+        if (truckRepository.findByRegNumberAllIgnoreCase(truckDto.getRegNumber()) != null) {
             throw new TruckAlreadyExistException("Truck with the following regNumber already exists: " + truckDto.getRegNumber());
         }
         Truck truck = TruckConverter.convertToTruck(truckDto);
@@ -38,14 +38,20 @@ public class TruckService {
 
 
     private Truck findTruckInDatabase(UUID id) {
-        return truckRepository.findById(id).orElseThrow(() ->
-                new TruckNotFoundException("Could not find truck with id: " + id));
-    }
+           return truckRepository.findById(id).orElseThrow(() ->
+                   new TruckNotFoundException("Could not find truck with id: " + id));
+       }
 
-    public TruckDto findById(UUID id) {
-        Truck truck = findTruckInDatabase(id);
-        return TruckConverter.convertToTruckDto(truck);
-    }
+       public TruckDto findById(UUID id) {
+           Truck truck = findTruckInDatabase(id);
+           return TruckConverter.convertToTruckDto(truck);
+       }
+
+       public TruckDto deleteTruck(UUID id){
+           Truck truckToDelete = findTruckInDatabase(id);
+           truckRepository.deleteById(id);
+           return TruckConverter.convertToTruckDto(truckToDelete);
+   }
 
     public TruckDto updateTruck(UUID id, Map<Object, Object> fields) {
         Truck truck = findTruckInDatabase(id);
@@ -58,6 +64,24 @@ public class TruckService {
             ReflectionUtils.setField(field, truck, value);
         });
         truckRepository.save(truck);
+        return TruckConverter.convertToTruckDto(truck);
+    }
+
+    public TruckDto editTruck(UUID id, TruckDto truckDto){
+        String regNumberBeforeChange = truckRepository.findById(id).get().getRegNumber();
+        if (truckRepository.findAllByRegNumberAllIgnoreCase(truckDto.getRegNumber()).size() >1) {
+            throw new TruckAlreadyExistException("Truck with the following regNumber already exists: " + truckDto.getRegNumber());
+        }
+
+        Truck truck = findTruckInDatabase(id);
+        truck.setTruckType(truckDto.getTruckType());
+        truck.setRegNumber(truckDto.getRegNumber());
+        truck.setMaxVolume(truckDto.getMaxVolume());
+        truckRepository.save(truck);
+        if (truckRepository.findAllByRegNumberAllIgnoreCase(truckDto.getRegNumber()).size() >1) {
+            truck.setRegNumber(regNumberBeforeChange);
+            truckRepository.save(truck);
+        }
         return TruckConverter.convertToTruckDto(truck);
     }
 

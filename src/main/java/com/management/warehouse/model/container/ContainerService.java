@@ -3,6 +3,10 @@ package com.management.warehouse.model.container;
 import com.management.warehouse.exception.FieldDoesNotExistException;
 import com.management.warehouse.exception.container.ContainerAlreadyExistException;
 import com.management.warehouse.exception.container.ContainerNotFoundException;
+import com.management.warehouse.exception.truck.TruckNotFoundException;
+import com.management.warehouse.model.truck.Truck;
+import com.management.warehouse.model.truck.TruckConverter;
+import com.management.warehouse.model.truck.TruckDto;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -48,6 +52,13 @@ public class ContainerService {
         return ContainerConverter.convertToContainerDto(container);
     }
 
+    public ContainerDto deleteContainer(UUID id){
+        Container containerToDelete = findContainerInDatabase(id);
+        containerRepository.deleteById(id);
+        return ContainerConverter.convertToContainerDto(containerToDelete);
+    }
+
+
     public ContainerDto updateContainer(UUID id, Map<Object, Object> fields) {
         Container container = findContainerInDatabase(id);
         fields.forEach((key, value) -> {
@@ -61,4 +72,26 @@ public class ContainerService {
         containerRepository.save(container);
         return ContainerConverter.convertToContainerDto(container);
     }
+
+    public ContainerDto editContainer(UUID id, ContainerDto containerDto){
+        String nameBeforeChange = containerRepository.findById(id).get().getName();
+        if (containerRepository.findAllByNameAllIgnoreCase(containerDto.getName()).size() > 1 ) {
+            throw new ContainerAlreadyExistException("Container with the following name already exists: " + containerDto.getName());
+        }
+
+        Container container = findContainerInDatabase(id);
+        container.setName(containerDto.getName());
+        container.setWidth(containerDto.getWidth());
+        container.setLength(containerDto.getLength());
+        container.setHeight(containerDto.getHeight());
+        container.setPrice(containerDto.getPrice());
+        container.setContainersAmount(containerDto.getContainersAmount());
+        containerRepository.save(container);
+        if (containerRepository.findAllByNameAllIgnoreCase(containerDto.getName()).size() > 1 ) {
+            container.setName(nameBeforeChange);
+            containerRepository.save(container);
+        }
+        return ContainerConverter.convertToContainerDto(container);
+    }
+
 }
