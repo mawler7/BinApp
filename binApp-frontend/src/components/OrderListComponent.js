@@ -9,7 +9,7 @@ const OrderListComponent = () => {
     const init = () => {
         OrderService.getAll()
         .then(response => {
-          console.log('Printing truck data', response.data);
+          console.log('Printing all orders', response.data);
           setOrders(response.data);
         })
         .catch(error => {
@@ -25,13 +25,26 @@ const OrderListComponent = () => {
         console.log('Printing id', id);
         OrderService.remove(id)
         .then(response =>{
-            console.log('Truck deleted successfully', response.data);
+            console.log('Order deleted successfully', response.data);
         init();
       })
       .catch(error => {
         console.log('Something went wrong', error);
       })
   }
+
+    const handleConfirm = id => {
+        console.log('Printing id', id);
+        OrderService.confirm(id)
+        .then(response =>{
+            console.log('Order confirmed successfully', response.data);
+        init();
+     })
+    .catch(error => {
+        console.log('Something went wrong', error);
+    })
+}
+
         return (
             
                 <div className="container">
@@ -44,6 +57,8 @@ const OrderListComponent = () => {
                         <td>Truck Type</td>
                         <td>Reg Number</td>
                         <td>User Full Name</td>
+                        <td>Order Date</td>
+                        <td>Delivery Date</td>
                         <td>Actions</td>
                     </tr>
 
@@ -57,8 +72,10 @@ const OrderListComponent = () => {
                                     <td>{order.truck.truckType}</td>
                                     <td>{order.truck.regNumber}</td>
                                     <td>{order.user.lastName} {order.user.firstName}</td>
+                                    <td>{order.date}</td>
+                                    <td>{order.dateDelivered}</td>
                                     <td>
-                                        <Link to={`/orders/edit/${order.id}`} className='btn btn-primary mb-2'>Edit</Link>
+                                        <button className='btn btn-success'  onClick={()=>{handleConfirm(order.id)}} >Confirm</button>
                                         <button className='btn btn-danger' onClick={()=>{handleDelete(order.id)}}>Delete</button>
                                     </td>
                                 </tr>

@@ -42,5 +42,10 @@ public class ContainerController {
         return containerService.deleteContainer(id);
     }
 
+    @PutMapping("{id}")
+    public ContainerDto editContainer(@PathVariable UUID id,  @RequestBody ContainerDto containerDto){
+        containerService.findById(id);
+        return containerService.editContainer(id, containerDto);
+    }
 
 }

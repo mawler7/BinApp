@@ -27,10 +27,10 @@ function App() {
                         <Route path="/containers" element={<ContainerListComponent/>}></Route>
                         <Route path="/orders/list/" element={<OrderListComponent/>}></Route>
                         <Route path="/orders/" element={<Order/>}></Route>
-                        <Route path="/orders/edit/:id" element={<Order/>}></Route>
+                        <Route path="/orders/:id" element={<Order/>}></Route>
                         <Route path="/containers/new/" element={<Container/>}></Route>
                         <Route path="/containers/edit/:id" element={<Container/>}></Route>
-                        <Route path="/trucks/edit/:id" element={<Truck/>}></Route>
+                        <Route path="/trucks/:id" element={<Truck/>}></Route>
                     </Routes>
                 <FooterComponent/>
             </div>

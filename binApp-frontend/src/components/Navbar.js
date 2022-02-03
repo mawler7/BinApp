@@ -4,10 +4,13 @@ import Logo from '../assets/logo.png'
 import {FaBars, FaTimes} from 'react-icons/fa'
 import './NavbarStyles.css'
 
-
 const Navbar = () => {
     const[click, setClick] = useState(false)
     const handleClick = () => setClick(!click)
+
+const onSelection = () => {
+    setClick(false);
+} 
 
     return (
         <header>
@@ -19,19 +22,19 @@ const Navbar = () => {
 
                 <ul className={click ? "nav-menu active" : 'nav-menu'}>
                     <li className='nav-item'>
-                        <Link to='/' className='nav-link'>Home</Link>
+                        <Link to='/' className='nav-link' onClick={onSelection} >Home</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to = '/containers' className='nav-link'>Containers</Link>
+                        <Link to = '/containers' className='nav-link' onClick={onSelection} >Containers</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to = '/trucks' className='nav-link'>Trucks</Link>
+                        <Link to = '/trucks' className='nav-link' onClick={onSelection}>Trucks</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to = '/orders/list' className='nav-link'>Orders</Link>
+                        <Link to = '/orders/list' className='nav-link' onClick={onSelection}>Orders</Link>
                     </li>
                     <li className='nav-item'>
-                        <Link to = '/users' className='nav-link'>Users</Link>
+                        <Link to = '/users' className='nav-link' onClick={onSelection}>Users</Link>
                     </li>
                 </ul>
                 </div>

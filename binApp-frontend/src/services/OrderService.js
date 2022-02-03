@@ -12,8 +12,8 @@ const get = id => {
     return httpClient.get(`/orders/${id}`);
 }
 
-const update = (id, data) => {
-    return httpClient.patch(`/orders/edit/${id}`, data)
+const update = (id,data) => {
+    return httpClient.patch(`/orders/${id}`, data);
 }
 
 
@@ -21,4 +21,8 @@ const remove = id => {
     return httpClient.delete(`orders/${id}`, id)
 }
 
-export default {getAll, create, get, remove, update }
+const confirm = id => {
+    return httpClient.post(`orders/deliver/${id}`, id)
+}
+
+export default {getAll, create, get, remove, update, confirm }

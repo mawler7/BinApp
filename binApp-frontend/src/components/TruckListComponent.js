@@ -42,7 +42,7 @@ const TruckComponent = () => {
                 <table className="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <td>Registartion Number</td>
+                        <td>Registration Number</td>
                         <td>Type</td>
                         <td>Max Volume</td>
                         <td>Actions</td>
@@ -57,7 +57,7 @@ const TruckComponent = () => {
                                     <td>{truck.truckType}</td>
                                     <td>{truck.maxVolume}</td>
                                     <td>
-                                        <Link to={`/trucks/edit/${truck.id}`} className='btn btn-primary mb-2'>Edit</Link>
+                                        <Link to={`/trucks/${truck.id}`} className='btn btn-primary mb-2'>Edit</Link>
                                         <button className='btn btn-danger' onClick={()=>{handleDelete(truck.id)}}>Delete</button>
                                     </td>
                                 </tr>
@@ -67,9 +67,6 @@ const TruckComponent = () => {
                 </table>
             </div>
           </div>
-        )
-    }
-    
-
-
+    )
+}
 export default TruckComponent

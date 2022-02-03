@@ -72,4 +72,26 @@ public class ContainerService {
         containerRepository.save(container);
         return ContainerConverter.convertToContainerDto(container);
     }
+
+    public ContainerDto editContainer(UUID id, ContainerDto containerDto){
+        String nameBeforeChange = containerRepository.findById(id).get().getName();
+        if (containerRepository.findAllByNameAllIgnoreCase(containerDto.getName()).size() > 1 ) {
+            throw new ContainerAlreadyExistException("Container with the following name already exists: " + containerDto.getName());
+        }
+
+        Container container = findContainerInDatabase(id);
+        container.setName(containerDto.getName());
+        container.setWidth(containerDto.getWidth());
+        container.setLength(containerDto.getLength());
+        container.setHeight(containerDto.getHeight());
+        container.setPrice(containerDto.getPrice());
+        container.setContainersAmount(containerDto.getContainersAmount());
+        containerRepository.save(container);
+        if (containerRepository.findAllByNameAllIgnoreCase(containerDto.getName()).size() > 1 ) {
+            container.setName(nameBeforeChange);
+            containerRepository.save(container);
+        }
+        return ContainerConverter.convertToContainerDto(container);
+    }
+
 }

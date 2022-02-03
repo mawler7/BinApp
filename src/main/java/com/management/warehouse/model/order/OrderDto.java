@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @NoArgsConstructor
@@ -22,4 +23,6 @@ public class OrderDto {
     private int amountOfOrderedContainers;
     private String type;
     private User user;
+    private LocalDateTime date;
+    private LocalDateTime dateDelivered;
 }

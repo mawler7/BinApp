@@ -31,9 +31,15 @@ public class TruckController {
         return truckService.registerNewTruck(truckDto);
     }
 
-    @PostMapping("/edit/{id}")
+    @PatchMapping("{id}")
     public TruckDto updateTruck(@PathVariable UUID id, @RequestBody Map<Object, Object> fields) {
         return truckService.updateTruck(id, fields);
+    }
+
+    @PutMapping("{id}")
+    public TruckDto editTruck(@PathVariable UUID id,  @RequestBody TruckDto truckDto){
+        truckService.findById(id);
+        return truckService.editTruck(id, truckDto);
     }
 
     @DeleteMapping("{id}")

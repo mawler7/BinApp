@@ -13,7 +13,7 @@ const get = id => {
 }
 
 const update = (id, data) => {
-    return httpClient.patch(`/containers/edit/${id}`, data)
+    return httpClient.patch(`/containers/edit/${id}`, id, data)
 }
 
 

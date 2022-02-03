@@ -9,6 +9,8 @@ public class OrderConverter {
         if (order == null) return null;
         return OrderDto.builder()
                 .id(order.getId())
+                .date(order.getDate())
+                .dateDelivered(order.getDateDelivered())
                 .truck(order.getTruck())
                 .container(order.getContainer())
                 .amountOfOrderedContainers(order.getAmountOfOrderedContainers())
@@ -21,6 +23,8 @@ public class OrderConverter {
         if (orderDto == null) return null;
         return Order.builder()
                 .id(orderDto.getId())
+                .date(orderDto.getDate())
+                .dateDelivered(orderDto.getDateDelivered())
                 .truck(orderDto.getTruck())
                 .container(orderDto.getContainer())
                 .amountOfOrderedContainers(orderDto.getAmountOfOrderedContainers())

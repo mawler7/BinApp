@@ -1,5 +1,6 @@
 package com.management.warehouse.model.order;
 
+import com.management.warehouse.exception.ContainerAmountException;
 import com.management.warehouse.exception.FieldDoesNotExistException;
 import com.management.warehouse.exception.OrderNotFoundException;
 import com.management.warehouse.exception.truck.TruckNotFoundException;
@@ -42,10 +43,13 @@ public class OrderService {
     }
 
     public OrderDto addOrder(OrderDto orderDto) {
-        if (orderDto.getUser().getRole() == UserRole.ROLE_USER) {
+        if (userRepository.findByEmail(orderDto.getUser().getEmail()).getRole() == UserRole.ROLE_USER) {
             orderDto.setType("loading");
         } else {
             orderDto.setType("unloading");
+        }
+        if(orderDto.getAmountOfOrderedContainers() > containerRepository.findByNameAllIgnoreCase(orderDto.getContainer().getName()).getContainersAmount()){
+            throw new ContainerAmountException("Container amount is not enough to realize order: " + orderDto.getContainer().getName());
         }
         Order order = Order.builder()
                 .id(UUID.randomUUID())
@@ -60,29 +64,24 @@ public class OrderService {
                 .dateDelivered(null)
                 .build();
         orderRepository.save(order);
+        Container container = containerRepository.getById(order.getContainer().getId());
+        if (order.getType().equalsIgnoreCase("loading")) {
+            container.setContainersAmount(container.getContainersAmount() - order.getAmountOfOrderedContainers());
+        } else {
+            container.setContainersAmount(container.getContainersAmount() + order.getAmountOfOrderedContainers());
+        }
+        containerRepository.save(container);
         return OrderConverter.convertToOrderDto(order);
     }
 
-    public Page<Order> getOrdersPaginated(Pageable pageable) {
-        return orderRepository.findAll(pageable);
-    }
-
-    public List<Order> setDelivered(UUID id) {
+    public void setDelivered(UUID id) {
         Optional<Order> order = orderRepository.findById(id);
-        if (order.isPresent()) {
+        if (order.isPresent() && !order.get().isDelivered()) {
             Order od = order.get();
             od.setDelivered(true);
             od.setDateDelivered(LocalDateTime.now());
             orderRepository.save(od);
-            Container container = containerRepository.getById(od.getContainer().getId());
-            if (od.getType().equalsIgnoreCase("loading")) {
-                container.setContainersAmount(container.getContainersAmount() - od.getAmountOfOrderedContainers());
-            } else {
-                container.setContainersAmount(container.getContainersAmount() + od.getAmountOfOrderedContainers());
-            }
-            containerRepository.save(container);
         }
-        return orderRepository.findAll();
     }
 
     private Order findOrderInDatabase(UUID id) {
@@ -97,6 +96,12 @@ public class OrderService {
 
     public OrderDto deleteOrder(UUID id){
         Order orderToDelete = findOrderInDatabase(id);
+        Container container = containerRepository.getById(orderToDelete.getContainer().getId());
+        if(orderToDelete.getType().equalsIgnoreCase("loading")){
+            container.setContainersAmount(container.getContainersAmount() + orderToDelete.getAmountOfOrderedContainers());
+        } else {
+            container.setContainersAmount(container.getContainersAmount() - orderToDelete.getAmountOfOrderedContainers());
+        }
         orderRepository.deleteById(id);
         return OrderConverter.convertToOrderDto(orderToDelete);
     }

@@ -2,6 +2,7 @@ import React, { Component, useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { Button, Container, Form, FormGroup, Input, Label } from "reactstrap";
 import ContainerService from "../services/ContainerService";
+import {Link} from "react-router-dom";
 
 
 const ContainerForm = (props) => {
@@ -14,6 +15,7 @@ const ContainerForm = (props) => {
   const [containersAmount, setContainersAmount] = useState(0);
   const navigate = useNavigate();
   const {id} = useParams();
+  const isAddMode = !id;
 
   useEffect(() => {
 
@@ -59,23 +61,23 @@ const ContainerForm = (props) => {
       };
 
       if(id){
-        ContainerService.update(item)
-        .then(response => {
-          console.log('Container data updated succesfully', response.data);
-          navigate('/');
-        })
-        .catch(error => {
-          console.log('Something went wrong', error);
-        })
+        alert("A form was submitted: " + JSON.stringify(item));
+        fetch(`http://localhost:8080/containers/${id}`, {
+          method: "PUT",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(item),
+          })
+          .then(function (response) {
+            console.log(response);
+            return response.json();
+            
+          })
+          .catch((e) => console.log(e));
+          window.location.replace("http://localhost:3000/containers/");
       } else {
-        ContainerService.create(item)
-        .then(response => {
-          console.log('Container added successfully', response.data)
-          navigate('/containers/new');
-        })
-        .catch(error => {
-          console.log('Something went wrong', error);
-        })
 
     alert("A form was submitted: " + JSON.stringify(item));
     fetch("http://localhost:8080/containers/", {
@@ -90,14 +92,16 @@ const ContainerForm = (props) => {
         return response.json();
       })
       .catch((e) => console.log(e));
+      window.location.replace("http://localhost:3000/containers/");
     }
   };
   
   
   return (
     <div>
-      <h1>Add container</h1>
+      <h1>{isAddMode ? 'Add container': 'Edit container'}</h1>
       <Container>
+        <Link to='/containers' className='btn btn-success'>Containers List</Link>
         <Form onSubmit={handleSubmit}>
           <FormGroup>
             <Label for="name">Container Name</Label>
@@ -167,7 +171,7 @@ const ContainerForm = (props) => {
           </FormGroup>
           <FormGroup>
             <Button color="primary" type="submit">
-              Add container
+              {isAddMode? 'Add container' : 'Edit container'}
             </Button>{" "}
           </FormGroup>
         </Form>

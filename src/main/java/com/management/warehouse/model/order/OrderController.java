@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.text.ParseException;
 import java.util.*;
 
 @RestController
@@ -21,7 +22,7 @@ public class OrderController {
     private final OrderService orderService;
 
     @PostMapping("/")
-    public OrderDto addOrder(@Valid @RequestBody OrderDto orderDto) {
+    public OrderDto addOrder(@Valid @RequestBody OrderDto orderDto) throws ParseException {
         return orderService.addOrder(orderDto);
     }
 
@@ -40,27 +41,16 @@ public class OrderController {
         return orderService.deleteOrder(id);
     }
 
-    @PostMapping("/edit/{id}")
+    @PatchMapping("/{id}")
     public OrderDto updateOrder(@PathVariable UUID id, @RequestBody Map<Object, Object> fields) {
         return orderService.updateOrder(id, fields);
     }
 
-    @GetMapping("/delivered/{id}")
-    public String setDelivered(Model model, @PathVariable("id") Optional<UUID> id, @RequestParam("page") Optional<Integer> page) {
-        orderService.setDelivered(id.get());
-        int currentPage = page.orElse(1);
-        Page<Order> orderPage = orderService.getOrdersPaginated(PageRequest.of(currentPage - 1, 15));
-        model.addAttribute("orderPage", orderPage);
-        int totalPages = orderPage.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = new ArrayList<>();
-            for (int i = 1; i <= totalPages; i++) {
-                pageNumbers.add(i);
-            }
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-        return "order";
+    @PostMapping("/deliver/{id}")
+    public void confirmDelivery(@PathVariable UUID id) throws ParseException {
+        orderService.setDelivered(id);
     }
+
 }
 
 

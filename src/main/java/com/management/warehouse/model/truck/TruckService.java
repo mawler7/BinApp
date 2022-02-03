@@ -3,9 +3,6 @@ package com.management.warehouse.model.truck;
 import com.management.warehouse.exception.FieldDoesNotExistException;
 import com.management.warehouse.exception.truck.TruckAlreadyExistException;
 import com.management.warehouse.exception.truck.TruckNotFoundException;
-import com.management.warehouse.model.user.User;
-import com.management.warehouse.model.user.UserConverter;
-import com.management.warehouse.model.user.UserDto;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 
@@ -67,6 +64,24 @@ public class TruckService {
             ReflectionUtils.setField(field, truck, value);
         });
         truckRepository.save(truck);
+        return TruckConverter.convertToTruckDto(truck);
+    }
+
+    public TruckDto editTruck(UUID id, TruckDto truckDto){
+        String regNumberBeforeChange = truckRepository.findById(id).get().getRegNumber();
+        if (truckRepository.findAllByRegNumberAllIgnoreCase(truckDto.getRegNumber()).size() >1) {
+            throw new TruckAlreadyExistException("Truck with the following regNumber already exists: " + truckDto.getRegNumber());
+        }
+
+        Truck truck = findTruckInDatabase(id);
+        truck.setTruckType(truckDto.getTruckType());
+        truck.setRegNumber(truckDto.getRegNumber());
+        truck.setMaxVolume(truckDto.getMaxVolume());
+        truckRepository.save(truck);
+        if (truckRepository.findAllByRegNumberAllIgnoreCase(truckDto.getRegNumber()).size() >1) {
+            truck.setRegNumber(regNumberBeforeChange);
+            truckRepository.save(truck);
+        }
         return TruckConverter.convertToTruckDto(truck);
     }
 
