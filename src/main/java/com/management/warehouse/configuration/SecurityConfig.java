@@ -5,6 +5,7 @@ import com.management.warehouse.exception.user.UserNotFoundException;
 import com.management.warehouse.model.user.UserRepository;
 import com.management.warehouse.security.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -71,6 +72,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/swagger-resources/**").permitAll()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/register/**").permitAll()
+                .antMatchers("/login/**").permitAll()
+//                .antMatchers(HttpMethod.PUT, "/containers/**").hasAuthority("ROLE_ADMIN")
+//                .antMatchers(HttpMethod.GET, "/containers/**").hasAnyAuthority("permitAll()SER", "ROLE_ADMIN")
+//                .antMatchers(HttpMethod.PUT, "/trucks/**").hasAuthority("permitAll()N")
+//                .antMatchers(HttpMethod.GET, "/trucks/**").hasAnyAuthority("permitAll()SER", "ROLE_ADMIN")
+//                .antMatchers(HttpMethod.GET, "/users/**").hasAnyAuthority( "permitAll()N")
+//                .antMatchers(HttpMethod.DELETE, "/containers/**").hasAuthority("permitAll()ADMIN")
+//                .antMatchers(HttpMethod.DELETE, "/trucks/**").hasAuthority("permitAll()N")
                 .anyRequest().permitAll();
 
         http.addFilterBefore(

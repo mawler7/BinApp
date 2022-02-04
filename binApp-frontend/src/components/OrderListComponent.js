@@ -76,6 +76,7 @@ const OrderListComponent = () => {
                                     <td>{order.dateDelivered}</td>
                                     <td>
                                         <button className='btn btn-success'  onClick={()=>{handleConfirm(order.id)}} >Confirm</button>
+                                        <Link to={`/orders/${order.id}`} className='btn btn-warning'>Edit</Link>
                                         <button className='btn btn-danger' onClick={()=>{handleDelete(order.id)}}>Delete</button>
                                     </td>
                                 </tr>
